@@ -1,0 +1,27 @@
+{
+  "name": "adamalmeida/processodentaluni",
+  "description": "Aplicação desenvolvida para o processo e seleção da empresa DENTAL UNI - Agosto 2021",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Adam Almeida de Oliveira"
+    }
+  ],
+  "config": {
+    "vendor-dir": "vendor"
+  },
+  "autoload": {
+    "psr-4": {
+      "Source\\": "source/"
+    },
+    "files": [
+      "source/Boot/Config.php"
+    ]
+  },
+  "require": {
+    "coffeecode/router": "1.0.8",
+    "coffeecode/paginator": "1.0.7",
+    "league/plates": "v4.0.0-alpha"
+  }
+}

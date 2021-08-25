@@ -1,0 +1,610 @@
+/**
+ * DESENVOLVIDO POR ADAM ALMEIDA
+ * PROCESSO DENTAL UNI
+ **/
+
+.main_header{
+    width: 100%;
+    background-color: #2D3142
+}
+
+.main_header .main_header_content{
+    max-width: 1300px;
+    margin: 0 auto;
+
+    display: flex;
+}
+
+.main_header .main_header_content .logo{
+    flex-basis: 330px;
+    padding: 30px;
+    width: 290px;
+}
+
+.main_header .main_header_content .main_header_content_menu {
+    flex-basis: calc(100% - 330px);
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 30px;
+}
+
+.main_header_content_menu ul {
+    display: flex;
+    align-items: stretch;
+}
+
+.main_header_content_menu ul li {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main_header_content_menu ul li a{
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    color: #FFD325;
+    transition: 0.2s;
+}
+
+.main_header_content_menu ul li a:hover{
+    color:#ffffff;
+    background-color: #FFD325;
+}
+
+/** MAIN search **/
+
+.main_search {
+    width: 100%;
+    background-color: #CCCCCC;
+}
+
+.main_search_content{
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 45px;
+    display: flex;
+}
+
+
+/** MAIN search **/
+
+.main_search_content header, .main_search_content form{
+    flex-basis: 50%;
+}
+
+@media (max-width: 980px){
+    
+    .main_search_content {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .main_search_content header{
+        flex-basis: 100%;
+        margin-bottom: 10px;
+    }
+
+    .main_search_content header h1, .main_search_content header p{
+        text-align: center !important;
+    }
+
+    .main_search_content form{
+        flex-basis: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .main_search_content form input[type=text]{
+        margin: 10px 0;
+        height: 40px;
+    }
+
+    .main_search_content form input[type=text],
+    .main_search_content form button{
+        flex-basis: 100% !important;
+    }
+
+    .main_search_content form button{
+        margin-top: 10px;
+    }
+}
+
+.main_search_content header h1, .main_search_content header p{
+    color: #ffffff;
+    margin-right: 20px;
+    text-align: right;
+    font-weight: 300;
+}
+
+.main_search_content header h1{
+    font-size: 1.4em;
+    font-family: Arial, Helvetica, sans-serif;   
+}
+
+.main_search_content form{
+    display: flex;
+    justify-content: space-between;   
+}
+
+.main_search_content form input[type=text]{
+    flex-basis: calc(100% - 80px);
+    height: 40px;
+    border: none;
+    padding: 0 10px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    margin-left: 10px;
+    transition: 0.5s;
+}
+
+.main_search_content form button{
+    width: 300px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    margin-left: 10px;
+    color: #ffffff;
+    background-color: #FFD325;
+    transition: 0.5s;
+}
+
+.main_search_content form button:hover{
+    background-color: #ffffff;
+    color:#2D3142;
+    cursor: pointer;
+}
+
+/** MAIN dentist **/
+.main_dentists{
+    width: 100%;
+    margin: 0 0 40px 0;
+}
+
+.main_dentists > header{
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px 0;
+
+}
+
+.main_dentists > header h1{
+    font-size: 1.0em;
+    color:#2D3142;
+    margin-bottom: 10px;
+}
+
+.main_dentists > header p{
+    color:  #FFD325;
+}
+
+.main_dentists_content{
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+
+.main_dentists_content a{
+    flex-basis: calc(50% - 40px);
+    background-color:rgb(233, 233, 233);
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+@media (max-width: 980px){
+    .main_dentists_content a{
+        flex-basis: 80%;
+    }
+}
+
+@media (max-width: 600px){
+    .main_dentists_content a{
+        flex-basis: 90%;
+    }
+    .main_dentists_article_right p{
+        font-size: 0.8em;
+    }
+}
+
+.main_dentists_content article{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main_dentists_content a:hover{
+    background-color:  #FFD325;
+}
+
+.main_dentists_content a:hover h2{
+    color: #ffffff;
+}
+
+.main_dentists_content a:hover p{
+    color: #ffffff;
+}
+
+.main_dentists_article_left{
+    flex-basis: 70%;
+}
+
+.main_dentists_article_left_button{
+    justify-content: end;
+    margin-top: 20px;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+
+    color: #ffffff;
+
+    transition: 0.5s;
+
+    cursor: pointer;
+}
+
+.main_dentists_article_left_button_edit{
+    background-color: #FFD325;
+}
+
+.main_dentists_article_left_button_delete{
+    background-color: #de0000;
+}
+
+
+.main_dentists_article_right{
+    padding: 20px;
+    font-size: 1em;
+    text-align: center;
+    justify-content: center;
+}
+
+
+.main_dentists_article_right p{
+    font-weight: 400;
+    color:#2D3142;
+}
+
+
+.main_dentists_article_left h2{
+    flex-basis: 45%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.2em;
+    color: #e38100;
+}
+
+.main_dentists_article_left p{
+    color:slategray;
+    margin-top: 2px;
+    font-size: 0.9em;
+}
+
+/** MAIN FOOTER **/
+
+.main_footer{
+    width: 100%;
+    background-color: rgba(219, 219, 219, 0.562);
+    padding: 10px 0;
+
+    position:fixed;
+    bottom:0px;
+
+    display: flex;
+
+    justify-content: center;    
+}
+
+.main_footer .main_footer_content {
+    width: 1300px;
+    text-align: center;
+
+}
+
+
+/** MOBILE MENU **/
+
+.main_header_content_menu_mobile{
+    flex-basis: calc(100% - 330px);
+    display: none;
+
+    justify-content: flex-end;
+
+}
+
+@media (max-width: 980px){
+    .main_header_content_menu{
+        display: none !important;
+    }
+
+    .main_header_content_menu_mobile{
+        display: flex;
+    }
+}
+
+.main_header_content_menu_mobile ul{
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+
+}
+
+.main_header_content_menu_mobile ul li{
+    display: flex;
+    align-items: center;
+
+    list-style-type: none;
+        
+    position: relative;
+}
+
+.main_header_content_menu_mobile_obj {
+    display: flex;
+    align-items: center;
+
+    padding: 20px;
+    color: #FFD325;
+    transition: background-color 0.3s;
+
+}
+
+.main_header_content_menu_mobile_obj:hover, .main_header_content_menu_mobile_obj_active{
+    background-color: #ffffff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.main_header_content_menu_mobile_sub{
+    min-width: 200px;
+    background-color: #ffffff;
+
+    border-radius: 4px 0 4px 4px;
+
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+    position: absolute;
+    top: 100%;
+    right: -20px;
+}
+
+.main_header_content_menu_mobile_sub > li{
+    flex-basis: 100%;
+}
+
+.main_header_content_menu_mobile_sub > li a{
+    width: 100%;
+    text-align: left;
+    color:slategray;
+    padding: 10px;
+    transition: background-color 0.3s;
+}
+
+.main_header_content_menu_mobile_sub > li a:hover{
+    background-color:#FFD325;
+    color:#ffffff;
+}
+.main_header_content_menu_mobile_sub > li:first-child a:hover{
+    border-top-left-radius: 5px;
+}
+
+.main_header_content_menu_mobile_sub > li:last-child a:hover{
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+/****************/
+/** LOGIN PAGE **/
+/****************/
+
+/** MAIN LOGIN **/
+
+.main_login{
+    max-width: calc(1300px - 40px);
+    padding: 0 20px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.main_login header{
+    flex-basis: 40%;
+    background-color:rgb(233, 233, 233);
+    padding: 50px;
+    margin: 40px;
+    height: auto;
+    text-align: center;
+
+    color:#2D3142;
+}
+
+.main_login header p{
+    font-size: .8em;
+    padding: 5px;
+}
+
+.main_login header form{
+    flex-basis: 100%;
+    display: flex;
+
+    flex-wrap: wrap;
+}
+
+.main_login header form label,
+.main_login header form input,
+.main_login header form button{
+    flex-basis: 100%;
+}
+
+.main_login header form input{
+    height: 40px;
+    margin-top: 20px;
+    border: none;
+    padding: 0 10px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    transition: 0.5s;
+}
+
+.main_login header form button{
+    height: 40px;
+    border: none;
+    padding: 0 10px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    transition: 0.5s;
+
+    margin-top: 20px;
+
+    color: #ffffff;
+    background-color: #FFD325;
+    transition: 0.5s;
+
+    cursor: pointer;
+}
+
+.main_login header form button:hover{
+    background-color: #ffffff;
+    color:#2D3142;
+    cursor: pointer;
+}
+
+
+/** PRODUCT INFO AND APLICATION dentist**/
+
+
+.main_content_product{
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.main_content_product header{
+    flex-basis: calc(30% - 40px);
+    background-color:rgb(233, 233, 233);
+    padding: 20px;
+    margin: 20px;
+    height: auto;
+
+    border-radius: 10px;
+}
+
+.main_content_product header:first-child{
+    display: flex;
+    align-items: center;
+}
+
+.main_content_product header+header{
+    flex-basis: calc(70% - 40px);
+}
+
+@media (max-width: 820px){
+    .main_content_product header, .main_content_product header:last-child{
+        flex-basis: 80%;
+    }
+
+    .main_content_product header:last-child{
+        margin-bottom: 80px;
+    }
+}
+
+.main_content_product header img{
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.main_content_product header h1{
+    flex-basis: 100%;
+    font-size: 1.5em;
+}
+
+.main_content_product header p{
+    font-size: 1em;
+    margin: 5px 0;
+    color: #FFD325;
+}
+
+
+.main_content_product header .price{
+    color:darkgreen;
+    font-size: 2em;
+    font-weight: 700;
+
+}
+
+.main_content_product header .price-risc{
+    color: darkred;
+    margin-right: 10px;
+    text-decoration: line-through;
+}
+
+
+.main_content_product header form{
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.main_content_product header form input{
+    flex-basis: 100%;
+
+    height: 40px;
+    margin-top: 8px;
+    border: none;
+    padding: 0 10px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    transition: 0.5s;
+}
+
+
+.main_content_product header form button{
+    flex-basis: 100%;
+    height: 40px;
+    border: none;
+    padding: 0 10px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    transition: 0.5s;
+
+    margin-top: 20px;
+
+    color: #ffffff;
+    background-color: #FFD325;
+    transition: 0.5s;
+
+    cursor: pointer;
+}
+
+.main_content_product header form button:hover{
+    background-color: #ffffff;
+    color:#2D3142;
+    cursor: pointer;
+}

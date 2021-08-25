@@ -1,0 +1,221 @@
+/**
+ * DESENVOLVIDO POR ADAM ALMEIDA
+ * PROCESSO DENTAL UNI
+ **/
+
+.main_admin{
+    max-width: calc(1300px - 40px);
+    padding: 0 20px;
+    margin: 0 auto;
+
+    flex-wrap: wrap;
+    
+}
+
+.main_admin_content{
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+}
+
+.main_admin_content header{
+    flex-basis: calc(50% - 40px);
+    background-color:rgb(233, 233, 233);
+    padding: 20px;
+    margin: 20px;
+    height: auto;
+}
+
+.main_admin_content header:first-child{
+    padding-bottom: 40px;
+}
+
+@media (max-width: 980px){
+    .main_admin_content header{
+        flex-basis: calc(100% - 40px);
+    }
+
+    .main_admin_content header+header{
+        margin-bottom: 60px;
+    }
+}
+
+/** SHOW TICKET **/
+
+.main_admin_content header .main_admin_content_table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.main_admin_content_table tbody tr td{
+    color: gray;
+    padding: 5px;
+    
+}
+
+.main_admin_content_table tbody tr td a:first-child{
+    font-size: 0.8em;
+    color: rgb(118, 118, 238);
+}
+
+.main_admin_content_table tbody tr td a+a{
+    font-size: 0.8em;
+    color: #ff2525;
+}
+
+.main_admin_content_table tbody tr td:last-child{
+    width: 50%;
+    text-align: right;
+}
+
+.main_admin_content_table tbody tr td .active{
+    font-size: 0.6em;
+    color: rgb(6, 163, 6);
+}
+
+ .main_admin_content_table tbody tr td .no-active{
+    font-size: 0.7em;
+    color: gray;
+}
+
+/** CREATE TICKET AND PRODUCT::FORM **/
+
+.main_admin_content header form{
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.main_admin_content header form label{
+    margin-top: 10px;
+}
+
+.main_admin_content header form input,select{
+    flex-basis: 100%;
+
+    height: 40px;
+    margin-top: 8px;
+    border: none;
+    padding: 0 10px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    transition: 0.5s;
+}
+
+.main_admin_content header form input[type=file]{
+    padding-left: 0;
+    background-color: darkgreen;
+    display: none;
+}
+
+.main_admin_content header form button{
+    flex-basis: 100%;
+    height: 40px;
+    border: none;
+    padding: 0 10px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    transition: 0.5s;
+
+    margin-top: 20px;
+
+    color: #ffffff;
+    background-color: #6ad900;
+    transition: 0.5s;
+
+    cursor: pointer;
+}
+
+.main_admin_content header form button:hover{
+    background-color: #ffffff;
+    color:#2D3142;
+    cursor: pointer;
+}
+
+/* linhas pares (even) */
+.main_admin_content header .main_admin_content_table tbody tr:nth-child(even) {
+    background-color: #CCC;
+    
+}
+/* linhas ímpares (odd) */
+.main_admin_content header .main_admin_content_table tbody tr:nth-child(odd) {
+    background-color:rgb(233, 233, 233);  
+}
+
+
+/** SHOW PRODUCT **/
+
+.main_admin_content .main_admin_content_product{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.main_admin_content .main_admin_content_product .main_product_content{
+    flex-basis: 33%;
+    padding: 5px;
+}
+
+@media (max-width: 570px){
+    .main_admin_content .main_admin_content_product .main_product_content{
+        flex-basis: 50%;
+    }
+}
+
+.main_product_content{
+    margin-top: 20px;
+}
+
+.main_product_content img{
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.main_product_content p{
+    margin-top: 5px;
+}
+
+.main_product_content h1{
+    color: gray;
+}
+
+.main_product_content p+p+p{
+    font-size: 0.7em;
+}
+
+.main_product_content p+p{
+    color: #FFD325;
+}
+
+.main_product_content .main_product_content_action{
+    margin-top: 10px;
+    font-size: 0.8em;
+    display: flex;
+    justify-content: space-between;
+
+    background-color: dodgerblue;
+
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.main_product_content .main_product_content_action span{
+    flex-basis: 45%;
+    color: #fff;
+    text-align: center;
+}
+
+.main_product_content .main_product_content_action span a{
+    flex-basis: 45%;
+    color: #fff; 
+}
+
+.main_product_content .main_product_content_action span a:hover{
+    color: rgb(125, 207, 255);
+}
+
