@@ -19,6 +19,7 @@ $route->get("/", "Web:home");
 $route->get("/{page}", "Web:home");
 $route->get("/login", "Web:login");
 $route->post("/login", "Web:login");
+$route->post("/terms", "Web:search");
 
 
 /**

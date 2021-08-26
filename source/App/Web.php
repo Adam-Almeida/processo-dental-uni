@@ -44,6 +44,17 @@ class Web
         ]);
     }
 
+    public function search(?array $data): void
+    {
+        $search = (object)filter_input_array(INPUT_POST, FILTER_SANITIZE_STRIPPED);
+
+        var_dump($search);
+
+        echo $this->view->render("search", [
+            "title" => "HOME | PROCESSO DENTAL UNI"
+        ]);
+    }
+
     /**
      * @param array|null $data
      */

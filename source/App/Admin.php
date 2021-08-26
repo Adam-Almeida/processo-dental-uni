@@ -78,15 +78,14 @@ class Admin
 
         if (!$specility){
             redirect("/admin/especialidades");
+            return;
         }
 
         if ($specility->destroy()){
             redirect("/admin/especialidades");
             return;
         }
-
         redirect("/admin/especialidades");
-
     }
 
     public function specialityCreate(){
@@ -245,6 +244,27 @@ class Admin
         }
 
 
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * @param string $type
+     * @param string $text
+     * @return object
+     */
+    public function message(string $type, string $text): object
+    {
+        return $this->message = (object)[
+            "type" => $type,
+            "text" => $text
+        ];
     }
 
 

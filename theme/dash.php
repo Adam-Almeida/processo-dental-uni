@@ -38,8 +38,6 @@
             <?php endif; ?>
         </header>
 
-
-
         <header class="radius">
 
                 <?php if (!empty($edit)): ?>
