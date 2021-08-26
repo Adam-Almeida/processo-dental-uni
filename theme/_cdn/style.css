@@ -97,12 +97,14 @@
         justify-content: center;
     }
 
-    .main_search_content form input[type=text]{
+    .main_search_content form input[type=text],
+    .main_search_content form select[type=text]{
         margin: 10px 0;
         height: 40px;
     }
 
     .main_search_content form input[type=text],
+    .main_search_content form select[type=text],
     .main_search_content form button{
         flex-basis: 100% !important;
     }
@@ -129,7 +131,8 @@
     justify-content: space-between;   
 }
 
-.main_search_content form input[type=text]{
+.main_search_content form input[type=text],
+.main_search_content form select[type=text]{
     flex-basis: calc(100% - 80px);
     height: 40px;
     border: none;
