@@ -7,7 +7,6 @@ use Source\Core\Pager;
 use Source\Models\Auth;
 use Source\Models\Dentist;
 use Source\Models\DentistSpecialty;
-use Source\Models\Specialty;
 
 /**
  * Class Web
@@ -72,7 +71,7 @@ class Web
         $page = (filter_var($data['page'], FILTER_VALIDATE_INT) >= 1 ? $data['page'] : 1);
 
         $dentist = new Dentist();
-        $dentistSearch = $dentist->find("({$type} LIKE :s)","s=%{$search}%")->fetch(true);
+        $dentistSearch = $dentist->find("{$type} LIKE :s","s=%{$search}%")->fetch(true);
 
 
         echo $this->view->render("search", [
