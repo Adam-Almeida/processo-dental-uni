@@ -30,9 +30,13 @@ $route->group("admin");
 
 $route->get("/dash", "Admin:adminArea");
 $route->get("/dash/{page}", "Admin:adminArea");
+
 $route->get("/especialidades", "Admin:specialityArea");
 $route->post("/especialidades", "Admin:specialityCreate");
 $route->get("/especialidade/excluir/{id}", "Admin:specialityDelete");
+$route->get("/especialidade/editar/{id}", "Admin:specialityUpdate");
+$route->post("/especialidade/editar/{id}", "Admin:specialityUpdate");
+
 
 $route->post("/dentista", "Admin:dentistCreate");
 $route->get("/dentista/excluir/{id}", "Admin:dentistDelete");

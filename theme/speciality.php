@@ -35,9 +35,9 @@
 
             <?php if (!empty($edit)): ?>
             <h1>Editar Dentista</h1>
-            <form action="<?= urlLink("/admin/cupom/editar/$edit->id"); ?>" enctype="multipart/form-data" method="post">
+            <form action="<?= urlLink("/admin/especialidade/editar/$edit->id"); ?>" enctype="multipart/form-data" method="post">
                 <label for="name">Nome</label>
-                <input name="name" type="text" required>
+                <input name="name" type="text" value="<?= $edit->name ;?>" required>
 
                 <button type="submit">Efetuar Cadastro</button>
 

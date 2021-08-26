@@ -69,14 +69,12 @@ class Admin
 
     public function specialityDelete(array $data)
     {
-        //** VALIDAÇÃO DE ID */
-
-        $idSpecility = filter_var($data['id'], FILTER_SANITIZE_SPECIAL_CHARS);
-
-        if (!$idSpecility || $idSpecility == '' || !is_numeric($idSpecility)) {
+        if (!empty($data['id']) && !is_numeric($data['id'])){
             redirect("/admin/dash");
             return;
         }
+
+        $idSpecility = filter_var($data['id'], FILTER_SANITIZE_SPECIAL_CHARS);
 
         $specility = (new Specialty())->findById($idSpecility);
 
@@ -92,23 +90,51 @@ class Admin
         redirect("/admin/especialidades");
     }
 
+    public function specialityUpdate(array $data)
+    {
+        if (!empty($data['id']) && !is_numeric($data['id'])){
+            redirect("/admin/especialidades");
+            return;
+        }
+
+        if (!empty($data['name'])){
+            $editId = filter_var($data['id'], FILTER_VALIDATE_INT);
+            $post = filter_var($data['name'], FILTER_SANITIZE_SPECIAL_CHARS);
+
+            $speciality = (new Specialty())->findById($editId);
+            $speciality->name = $post;
+
+            if ($speciality->save()){
+                redirect("/admin/especialidades");
+            }
+
+        }else{
+            $specialityAll = (new Specialty())->find()->fetch(true);
+
+            echo $this->view->render("speciality", [
+                "title" => "LISTA DE ESPECIALIDADES | PROCESSO DENTAL UNI",
+                "user" => Auth::user()->first_name ." ". Auth::user()->last_name,
+                "specialityAll" => $specialityAll,
+                "edit" => (new Specialty())->findById($data['id'])
+            ]);
+
+        }
+    }
+
     public function specialityCreate(){
 
-        $specialityPost = (object)filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+        $post = (object)filter_input_array(INPUT_POST, FILTER_SANITIZE_STRIPPED);
 
-        if (empty($specialityPost->name)){
-            redirect("./");
+        if (!empty($post)) {
+
+            $speciality = new Specialty();
+            $speciality->bootstrap($post->name);
+            $speciality->save();
+            redirect("./admin/especialidades");
+            return;
         }
 
-        $speciality = (new Specialty())->bootstrap(
-            $specialityPost->name,
-        );
-
-        if ($speciality->save()){
-            redirect("/admin/especialidades");
-        }
-
-        //implemantar erro aqui
+        redirect("./admin/especialidades");
     }
 
     /**
