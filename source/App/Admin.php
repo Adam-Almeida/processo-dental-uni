@@ -35,6 +35,7 @@ class Admin
 
     public function adminArea(?array $data): void
     {
+        //VALIDACAO DO NUMERO DA PAGINA NA URL
         if(!empty($data['page']) && !is_numeric($data['page'])){
             redirect("/admin/dash");
             return;
@@ -67,27 +68,20 @@ class Admin
         ]);
     }
 
-    public function specialityDelete(array $data)
-    {
-        if (!empty($data['id']) && !is_numeric($data['id'])){
-            redirect("/admin/dash");
+    public function specialityCreate(){
+
+        $post = (object)filter_input_array(INPUT_POST, FILTER_SANITIZE_STRIPPED);
+
+        if (!empty($post)) {
+
+            $speciality = new Specialty();
+            $speciality->bootstrap($post->name);
+            $speciality->save();
+            redirect("./admin/especialidades");
             return;
         }
 
-        $idSpecility = filter_var($data['id'], FILTER_SANITIZE_SPECIAL_CHARS);
-
-        $specility = (new Specialty())->findById($idSpecility);
-
-        if (!$specility){
-            redirect("/admin/especialidades");
-            return;
-        }
-
-        if ($specility->destroy()){
-            redirect("/admin/especialidades");
-            return;
-        }
-        redirect("/admin/especialidades");
+        redirect("./admin/especialidades");
     }
 
     public function specialityUpdate(array $data)
@@ -121,130 +115,104 @@ class Admin
         }
     }
 
-    public function specialityCreate(){
-
-        $post = (object)filter_input_array(INPUT_POST, FILTER_SANITIZE_STRIPPED);
-
-        if (!empty($post)) {
-
-            $speciality = new Specialty();
-            $speciality->bootstrap($post->name);
-            $speciality->save();
-            redirect("./admin/especialidades");
+    public function specialityDelete(array $data)
+    {
+        if (!empty($data['id']) && !is_numeric($data['id'])){
+            redirect("/admin/dash");
             return;
         }
 
-        redirect("./admin/especialidades");
+        $idSpecility = filter_var($data['id'], FILTER_SANITIZE_SPECIAL_CHARS);
+
+        $specility = (new Specialty())->findById($idSpecility);
+
+        if (!$specility){
+            redirect("/admin/especialidades");
+            return;
+        }
+
+        if ($specility->destroy()){
+            redirect("/admin/especialidades");
+            return;
+        }
+        redirect("/admin/especialidades");
     }
 
-    /**
-     * MÉTODO PARA EXCLUIR DENTISTA E ESPECIALIDADES
-     * @param array $data
-     */
-    public function dentistDelete(array $data): void
+    public function dentistCreate(?array $data): void
     {
-        //** VALIDAÇÃO DE ID */
-
-        $idDentist = filter_var($data['id'], FILTER_SANITIZE_SPECIAL_CHARS);
-
-        if (!$idDentist || $idDentist == '' || !is_numeric($idDentist)) {
+        //VALIDA SE OS CAMPOS ESTAO VAZIOS
+        if (in_array("", $data)){
             redirect("/admin/dash");
             return;
         }
 
-        /* REFATORAR :: IMPLEMENTAR A CLASSE ->  MESSAGE */
-        $dentistById = (new Dentist())->findById($idDentist);
-        $specialistdentist = (new DentistSpecialty())
-            ->find("dentista_id=:dentista_id", "dentista_id={$idDentist}")->fetch();
-
-        if (!$dentistById || !$specialistdentist){
+        //VALIDA O CAMPO EMAIL
+        if (!is_email($data['email'])){
             redirect("/admin/dash");
+            return;
         }
 
-        if ($dentistById->destroy()){
-            $specialistdentist->destroy();
-        } else {
-            redirect("/admin/dash");
-        }
-
-        redirect("/admin/dash");
-    }
-
-    public function dentistCreate(): void
-    {
-
-        $dentistPost = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-
-        if (!$dentistPost){
-            redirect("./");
-        }
-
-        if (in_array("", $dentistPost)){
+        //VALIDA O CAMPO CRO QTD MIN E MAX
+        if (!is_cro($data['cro'])){
             redirect("./");
             return;
         }
 
-        $dentistPost = (object)$dentistPost;
-
-        if (!is_email($dentistPost->email)){
-            redirect("./");
-            return;
-        }
-
-        if (!is_cro($dentistPost->cro)){
-            redirect("./");
-            return;
-        }
+        $data = (object)filter_var_array($data, FILTER_SANITIZE_STRIPPED);
 
         $dentist = (new Dentist())->bootstrap(
-            $dentistPost->name,
-            $dentistPost->email,
-            $dentistPost->cro,
-            $dentistPost->cro_uf
+            $data->name,
+            $data->email,
+            $data->cro,
+            $data->cro_uf
         );
 
         if ($dentist->save()){
-            $dentist->saveTrue($dentistPost->especialidade, $dentist->id);
-            redirect("./");
+            $dentist->saveTrue($data->especialidade, $dentist->id);
+            redirect("/admin/dash");
         }
     }
 
-    public function dentistUpdate(array $data): void
+
+    public function dentistUpdate(?array $data): void
     {
-        if (!$data['id'] || !is_numeric($data['id'])) {
-            redirect("./");
+        if (!$data['id'] && !is_numeric($data['id'])) {
+            redirect("/admin/dash");
             return;
         }
 
-        $dentistPost = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+        $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
 
-        if ($dentistPost){
+        if (!empty($data['name'])){
 
-            if (in_array("", $dentistPost)){
+            //VALIDA SE OS CAMPOS ESTAO VAZIOS
+            if (in_array("", $data)){
+                redirect("/admin/dash");
+                return;
+            }
+
+            //VALIDA O CAMPO EMAIL
+            if (!is_email($data['email'])){
+                redirect("/admin/dash");
+                return;
+            }
+
+            //VALIDA O CAMPO CRO QTD MIN E MAX
+            if (!is_cro($data['cro'])){
                 redirect("./");
                 return;
             }
 
-            $dentistPost = (object)$dentistPost;
+            $data = (object)$data;
 
-            if (!is_email($dentistPost->email)){
-                redirect("./");
-                return;
-            }
+            $dentist = (new Dentist())->findById($data->id);
+            $dentist->name = $data->name;
+            $dentist->email = $data->email;
+            $dentist->cro = $data->cro;
+            $dentist->cro_uf = $data->cro_uf;
 
-            if (!is_cro($dentistPost->cro)){
-                redirect("./");
-                return;
-            }
-
-            $dentist = (new Dentist())->findById($data['id']);
-            $dentist->name = $dentistPost->name;
-            $dentist->email = $dentistPost->email;
-            $dentist->cro = $dentistPost->cro;
-            $dentist->cro_uf = $dentistPost->cro_uf;
-
-            if ($dentist->save()) {
-//                $dentist->saveTrue($dentistPost->especialidade, $dentist->id);
+            if ($dentist->save()){
+                $dentist->updateTrue($data->especialidade, $dentist->id);
                 redirect("/admin/dash");
             }
 
@@ -279,6 +247,35 @@ class Admin
         }
 
 
+    }
+
+    public function dentistDelete(array $data): void
+    {
+        //** VALIDAÇÃO DE ID */
+
+        $idDentist = filter_var($data['id'], FILTER_SANITIZE_SPECIAL_CHARS);
+
+        if (!$idDentist || $idDentist == '' || !is_numeric($idDentist)) {
+            redirect("/admin/dash");
+            return;
+        }
+
+        /* REFATORAR :: IMPLEMENTAR A CLASSE ->  MESSAGE */
+        $dentistById = (new Dentist())->findById($idDentist);
+        $specialistdentist = (new DentistSpecialty())
+            ->find("dentista_id=:dentista_id", "dentista_id={$idDentist}")->fetch();
+
+        if (!$dentistById || !$specialistdentist){
+            redirect("/admin/dash");
+        }
+
+        if ($dentistById->destroy()){
+            $specialistdentist->destroy();
+        } else {
+            redirect("/admin/dash");
+        }
+
+        redirect("/admin/dash");
     }
 
     /**

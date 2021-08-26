@@ -8,11 +8,12 @@ use Source\Models\Auth;
 use Source\Models\Dentist;
 use Source\Models\DentistSpecialty;
 
+
 /**
- * Class Web
- * @package Source\App
  * CONTROLADOR WEB - DESENVOLVIDO POR ADAM ALMEIDA
  * PROCESSO DENTAL UNI 2021
+ * @package Source\App
+ * @author Adam Almeida <adam.designjuridico@gmail.com>
  */
 class Web
 {
@@ -32,6 +33,7 @@ class Web
      */
     public function home(?array $data): void
     {
+        //VALIDACAO DO NUMERO DA PAGINA NA URL
         if(!empty($data['page']) && !is_numeric($data['page'])){
             redirect("/");
             return;
@@ -49,6 +51,9 @@ class Web
         ]);
     }
 
+    /**
+     * @param array|null $data
+     */
     public function search(?array $data): void
     {
 

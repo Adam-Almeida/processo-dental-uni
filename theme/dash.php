@@ -7,10 +7,7 @@
             <?php if (!empty($dentistsAll)): ?>
             <h1>Dentistas Cadastrados</h1>
             <br>
-
                 <?php foreach ($dentistsAll as $dentist):?>
-
-
                         <article style="border-bottom: #ffffff 1px solid; margin-bottom: 10px">
                             <div class="main_dentists_article_left">
                                 <h2 id="value-real-dentist"><?= $dentist->dentist()->name ?></h2>
@@ -39,16 +36,15 @@
         </header>
 
         <header class="radius">
-
                 <?php if (!empty($edit)): ?>
                 <h1>Editar Dentista</h1>
-                <form action="<?= urlLink("/admin/dentista/editar/$edit->id"); ?>" enctype="multipart/form-data" method="post">
+                <form action="<?= urlLink("/admin/dentista/editar/$edit->id"); ?>" enctype="multipart/form-data" method="post" >
                         <label for="name">Nome</label>
                         <input name="name" type="text" value="<?= $edit->name; ?>" required>
                         <label for="email">Email</label>
                         <input name="email" type="email" value="<?= $edit->email; ?>" required>
                         <label for="cro">CRO</label>
-                        <input name="cro" type="number" value="<?= $edit->cro; ?>">
+                        <input name="cro" type="number" value="<?= $edit->cro; ?>" required>
                         <label for="cro_uf">CRO UF</label>
                         <select name="cro_uf">
                             <option value="<?= $edit->cro_uf; ?>" selected><?= $edit->cro_uf; ?></option>
@@ -98,7 +94,7 @@
                 <?php else: ?>
 
                     <h1>Cadastrar Novo Dentista</h1>
-                    <form action="<?= urlLink("/admin/dentista"); ?>" enctype="multipart/form-data" method="post">
+                    <form action="<?= urlLink("/admin/dentista"); ?>" enctype="multipart/form-data" method="post" novalidate>
                         <label for="name">Nome</label>
                         <input name="name" type="text" required>
                         <label for="email">Email</label>

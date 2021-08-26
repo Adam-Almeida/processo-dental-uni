@@ -4,6 +4,11 @@ namespace Source\Models;
 
 use Source\Core\Model;
 
+/**
+ * Class Dentist
+ * @package Source\Models
+ * @author Adam Almeida <adam.designjuridico@gmail.com>
+ */
 class Dentist extends Model
 {
 
@@ -15,6 +20,13 @@ class Dentist extends Model
         parent::__construct('dentistas', ['id'], ['name', 'email', 'cro', 'cro_uf']);
     }
 
+    /**
+     * @param string $name
+     * @param string $email
+     * @param string $cro
+     * @param string $cro_uf
+     * @return $this
+     */
     public function bootstrap(
         string $name,
         string $email,
@@ -28,7 +40,12 @@ class Dentist extends Model
         return $this;
     }
 
-    public function saveTrue(int $idSpeciality, int $idDentist)
+    /**
+     * @param int $idSpeciality
+     * @param int $idDentist
+     * @return bool
+     */
+    public function saveTrue(int $idSpeciality, int $idDentist): bool
     {
         $dataSpeciality = new DentistSpecialty();
         $dataSpeciality->bootstrap(
@@ -39,25 +56,39 @@ class Dentist extends Model
         if ($dataSpeciality->save()){
             return true;
         }
-
         return false;
-
     }
 
+    /**
+     * @param int $idSpeciality
+     * @param int $idDentist
+     * @return bool
+     */
+    public function updateTrue(int $idSpeciality, int $idDentist): bool
+    {
+        $dataSpeciality = (new DentistSpecialty())->find("dentista_id = :id", "id={$idDentist}")->fetch();
+
+        $dataSpeciality->especialidade_id = $idSpeciality;
+        if ($dataSpeciality->save()){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return mixed|Model|null
+     */
     public function speciality()
     {
         if (!empty($this->id)){
             $speciality = (new DentistSpecialty())->find("dentista_id = :id", "id={$this->id}", "especialidade_id")->fetch();
 
             if ($speciality){
-                $specialityname = (new Specialty())->findById((int)$speciality->especialidade_id);
-                return $specialityname;
+                return (new Specialty())->findById((int)$speciality->especialidade_id);
             }
             return null;
         }
-
         return null;
-
     }
 
 }
