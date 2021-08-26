@@ -11,8 +11,10 @@ use Source\Models\Specialty;
 
 
 /**
- * Class Admin
+ * CONTROLADOR ADMIN - DESENVOLVIDO POR ADAM ALMEIDA
+ * PROCESSO DENTAL UNI 2021
  * @package Source\App
+ * @author Adam Almeida <adam.designjuridico@gmail.com>
  */
 class Admin
 {
@@ -33,6 +35,10 @@ class Admin
         }
     }
 
+    /**
+     * Metodo que renderiza a Dash Administrativa
+     * @param array|null $data
+     */
     public function adminArea(?array $data): void
     {
         //VALIDACAO DO NUMERO DA PAGINA NA URL
@@ -57,6 +63,9 @@ class Admin
         ]);
     }
 
+    /**
+     * Metodo que renderiza a Dash de Especialidades
+     */
     public function specialityArea(): void
     {
         $specialityAll = (new Specialty())->find()->fetch(true);
@@ -68,6 +77,9 @@ class Admin
         ]);
     }
 
+    /**
+     * Metodo de criacao de Especialidades
+     */
     public function specialityCreate(){
 
         $post = (object)filter_input_array(INPUT_POST, FILTER_SANITIZE_STRIPPED);
@@ -84,6 +96,10 @@ class Admin
         redirect("./admin/especialidades");
     }
 
+    /**
+     * Metodo de Atualizacao de Especialidades
+     * @param array $data
+     */
     public function specialityUpdate(array $data)
     {
         if (!empty($data['id']) && !is_numeric($data['id'])){
@@ -115,6 +131,10 @@ class Admin
         }
     }
 
+    /**
+     * Metodo para Excluir uma Especialidades
+     * @param array $data
+     */
     public function specialityDelete(array $data)
     {
         if (!empty($data['id']) && !is_numeric($data['id'])){
@@ -138,6 +158,10 @@ class Admin
         redirect("/admin/especialidades");
     }
 
+    /**
+     * Metodo de criacao de um Dentista
+     * @param array|null $data
+     */
     public function dentistCreate(?array $data): void
     {
         //VALIDA SE OS CAMPOS ESTAO VAZIOS
@@ -173,10 +197,13 @@ class Admin
         }
     }
 
-
+    /**
+     * Metodo de Atualizacao de um Dentista
+     * @param array|null $data
+     */
     public function dentistUpdate(?array $data): void
     {
-        if (!$data['id'] && !is_numeric($data['id'])) {
+        if ($data['id'] && !is_numeric($data['id'])) {
             redirect("/admin/dash");
             return;
         }
@@ -249,33 +276,35 @@ class Admin
 
     }
 
+    /**
+     * Metodo para Excluir um Dentista
+     * @param array $data
+     */
     public function dentistDelete(array $data): void
     {
-        //** VALIDAÇÃO DE ID */
-
-        $idDentist = filter_var($data['id'], FILTER_SANITIZE_SPECIAL_CHARS);
-
-        if (!$idDentist || $idDentist == '' || !is_numeric($idDentist)) {
+        if ($data['id'] && !is_numeric($data['id'])) {
             redirect("/admin/dash");
             return;
         }
 
-        /* REFATORAR :: IMPLEMENTAR A CLASSE ->  MESSAGE */
-        $dentistById = (new Dentist())->findById($idDentist);
-        $specialistdentist = (new DentistSpecialty())
-            ->find("dentista_id=:dentista_id", "dentista_id={$idDentist}")->fetch();
+        $dataId = filter_var($data['id'], FILTER_VALIDATE_INT);
 
-        if (!$dentistById || !$specialistdentist){
+        $dentistById = (new Dentist())->findById($dataId);
+        $specialityDentist = (new DentistSpecialty())
+            ->find("dentista_id = :dentista_id", "dentista_id={$dataId}")->fetch();
+
+        //VALIDA EXISTENCIA DE AMBOS REGISTROS
+        if (empty($dentistById) || empty($specialityDentist)){
             redirect("/admin/dash");
+            return;
         }
 
+        //EXCLUI AMBOS REGISTROS
         if ($dentistById->destroy()){
-            $specialistdentist->destroy();
-        } else {
-            redirect("/admin/dash");
+            $specialityDentist->destroy();
+            var_dump(true);
+            die();
         }
-
-        redirect("/admin/dash");
     }
 
     /**
