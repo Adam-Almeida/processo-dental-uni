@@ -35,6 +35,11 @@ class Admin
 
     public function adminArea(?array $data): void
     {
+        if(!empty($data['page']) && !is_numeric($data['page'])){
+            redirect("/admin/dash");
+            return;
+        }
+
         $dentistsAll = (new DentistSpecialty())->find();
 
         $specialityAll = (new Specialty())->find()->fetch(true);
@@ -219,6 +224,11 @@ class Admin
             }
 
         }else{
+
+            if(!empty($data['page']) && !is_numeric($data['page'])){
+                redirect("/admin/dash");
+                return;
+            }
 
             $dentistId = filter_var($data['id'], FILTER_SANITIZE_SPECIAL_CHARS);
             $dentistEdit = (new Dentist())->findById($dentistId);

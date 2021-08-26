@@ -6,7 +6,7 @@
             <h1>Confira a validade dos dados do seu dentista</h1>
             <p>Informe o nome, especialidade ou cro e faça sua busca</p>
         </header>
-        <form action="<?= urlLink('/terms'); ?>" enctype="multipart/form-data" method="post"">
+        <form action="<?= urlLink('/buscar'); ?>" enctype="multipart/form-data" method="post"">
             <input type="text" name="s" placeholder="Digite aqui =)">
             <button type="submit">Buscar</button>
         </form>

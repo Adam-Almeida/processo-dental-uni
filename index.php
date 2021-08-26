@@ -19,8 +19,8 @@ $route->get("/", "Web:home");
 $route->get("/{page}", "Web:home");
 $route->get("/login", "Web:login");
 $route->post("/login", "Web:login");
-$route->post("/terms", "Web:search");
-
+$route->post("/dentista/buscar", "Web:search");
+$route->get("/dentista/buscar/{terms}/{page}", "Web:search");
 
 /**
  *ADMIN ROUTES

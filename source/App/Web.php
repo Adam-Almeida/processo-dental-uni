@@ -5,6 +5,7 @@ namespace Source\App;
 use League\Plates\Engine;
 use Source\Core\Pager;
 use Source\Models\Auth;
+use Source\Models\Dentist;
 use Source\Models\DentistSpecialty;
 
 /**
@@ -31,6 +32,10 @@ class Web
      */
     public function home(?array $data): void
     {
+        if(!empty($data['page']) && !is_numeric($data['page'])){
+            redirect("/");
+            return;
+        }
 
         $dentistsAll = (new DentistSpecialty())->find();
 
@@ -46,12 +51,16 @@ class Web
 
     public function search(?array $data): void
     {
-        $search = (object)filter_input_array(INPUT_POST, FILTER_SANITIZE_STRIPPED);
-
-        var_dump($search);
+        if (!empty($data['s'])){
+            $search = filter_var($data['s'], FILTER_SANITIZE_STRIPPED);
+            redirect("/dentista/buscar/{$search}/1");
+            return;
+        }
 
         echo $this->view->render("search", [
-            "title" => "HOME | PROCESSO DENTAL UNI"
+            "title" => "HOME | PROCESSO DENTAL UNI",
+            "search" => ($search ?? null),
+            "paginator" => ""
         ]);
     }
 
