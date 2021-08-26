@@ -25,10 +25,10 @@
         </a>
         <nav class="main_header_content_menu">
             <ul>
-                <li><a href="<?= urlLink("/admin/dash"); ?>" class="icon-ticket">DENTISTAS</a></li>
-                <li><a href="<?= urlLink("/admin/especialidades"); ?>" class="icon-gift">ESPECIALIDADES</a></li>
+                <li><a href="<?= urlLink("/admin/dash"); ?>" class="icon-user-plus">DENTISTAS</a></li>
+                <li><a href="<?= urlLink("/admin/especialidades"); ?>" class="icon-plus">ESPECIALIDADES</a></li>
                 <li><a href="<?= urlLink("/admin/sair"); ?>" class="icon-exit">SAIR</a></li>
-                <li style="color: #ffffff"><i class="icon-user-plus"></i><?= $user; ?></li>
+                <li style="color: #ffffff"><i class="icon-user"></i><?= $user; ?></li>
             </ul>
         </nav>
 
@@ -37,10 +37,10 @@
                 <li>
                     <span class="main_header_content_menu_mobile_obj icon-menu icon-notext "></span>
                     <ul class="main_header_content_menu_mobile_sub ds_none">
-                        <li><a href="<?= urlLink("/admin/dash"); ?>" class="icon-ticket">DENTISTAS</a></li>
-                        <li><a href="<?= urlLink("/admin/especialidades"); ?>" class="icon-gift">ESPECIALIDADES</a></li>
+                        <li><a href="<?= urlLink("/admin/dash"); ?>" class="icon-user-plus">DENTISTAS</a></li>
+                        <li><a href="<?= urlLink("/admin/especialidades"); ?>" class="icon-plus">ESPECIALIDADES</a></li>
                         <li><a href="<?= urlLink("/admin/sair"); ?>" class="icon-exit">SAIR</a></li>
-                        <li style="color: #cccccc"><i class="icon-user-plus"><?= $user; ?></i></li>
+                        <li style="color: #004594; margin: 10px"><i class="icon-user"></i><?= $user; ?></li>
                     </ul>
                 </li>
             </ul>

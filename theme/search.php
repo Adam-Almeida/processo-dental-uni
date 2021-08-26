@@ -2,7 +2,7 @@
 
 <section id="dentist-id" class="main_dentists">
     <header>
-        <h1 class="icon-dentist">Consfira os Últimos Dentistas Cadastrados</h1>
+        <h1 class="icon-dentist">Resultados da sua busca</h1>
         <p>Utilize a busca para obter resultados mais detalhados.</p>
     </header>
     <div class="main_dentists_content">
