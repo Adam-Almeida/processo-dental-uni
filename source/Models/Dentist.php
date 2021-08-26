@@ -36,7 +36,7 @@ class Dentist extends Model
         $this->name = $name;
         $this->email = $email;
         $this->cro = $cro;
-        $this->cro_uf  = $cro_uf;
+        $this->cro_uf = $cro_uf;
         return $this;
     }
 
@@ -47,13 +47,13 @@ class Dentist extends Model
      */
     public function saveTrue(int $idSpeciality, int $idDentist): bool
     {
-        $dataSpeciality = new DentistSpecialty();
+        $dataSpeciality = new DentistSpeciality();
         $dataSpeciality->bootstrap(
             $idSpeciality,
             $idDentist
         );
 
-        if ($dataSpeciality->save()){
+        if ($dataSpeciality->save()) {
             return true;
         }
         return false;
@@ -66,10 +66,10 @@ class Dentist extends Model
      */
     public function updateTrue(int $idSpeciality, int $idDentist): bool
     {
-        $dataSpeciality = (new DentistSpecialty())->find("dentista_id = :id", "id={$idDentist}")->fetch();
+        $dataSpeciality = (new DentistSpeciality())->find("dentista_id = :id", "id={$idDentist}")->fetch();
 
         $dataSpeciality->especialidade_id = $idSpeciality;
-        if ($dataSpeciality->save()){
+        if ($dataSpeciality->save()) {
             return true;
         }
         return false;
@@ -80,11 +80,12 @@ class Dentist extends Model
      */
     public function speciality()
     {
-        if (!empty($this->id)){
-            $speciality = (new DentistSpecialty())->find("dentista_id = :id", "id={$this->id}", "especialidade_id")->fetch();
+        if (!empty($this->id)) {
+            $speciality = (new DentistSpeciality())->find("dentista_id = :id", "id={$this->id}",
+                "especialidade_id")->fetch();
 
-            if ($speciality){
-                return (new Specialty())->findById((int)$speciality->especialidade_id);
+            if ($speciality) {
+                return (new Speciality())->findById((int)$speciality->especialidade_id);
             }
             return null;
         }

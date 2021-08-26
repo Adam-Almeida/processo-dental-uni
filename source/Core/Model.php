@@ -245,7 +245,7 @@ abstract class Model
      */
     public function save(): bool
     {
-        if (!$this->required()){
+        if (!$this->required()) {
             return false;
         }
 

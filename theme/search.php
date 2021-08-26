@@ -9,7 +9,6 @@
         <?php if (!empty($dentistsAll)):
             foreach ($dentistsAll as $dentist):
                 ?>
-
                 <a style="cursor: pointer;" id="copy-dentist-transfer-area">
                     <article>
                         <div class="main_dentists_article_left">
@@ -29,9 +28,7 @@
                 <h2>Ainda não existem Dentistas Cadastrados!</h2>
             </article>
         <?php endif; ?>
-
     </div>
-
 </section>
 <div class="container_paginator">
 

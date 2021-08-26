@@ -9,12 +9,12 @@
         <?php if (!empty($dentistsAll)):
             foreach ($dentistsAll as $dentist):
                 ?>
-
                 <a style="cursor: pointer;" id="copy-dentist-transfer-area">
                     <article>
                         <div class="main_dentists_article_left">
                             <h2 id="value-real-dentist"><?= $dentist->dentist()->name; ?></h2>
-                            <p class="icon-aid-kit">CRO <?= $dentist->dentist()->cro . " - " . $dentist->dentist()->cro_uf; ?></p>
+                            <p class="icon-aid-kit">
+                                CRO <?= $dentist->dentist()->cro . " - " . $dentist->dentist()->cro_uf; ?></p>
                             <p class="icon-mail4"><?= $dentist->dentist()->email; ?></p>
                         </div>
                         <div class="main_dentists_article_right">
@@ -22,16 +22,14 @@
                         </div>
                     </article>
                 </a>
-        <?php
+            <?php
             endforeach;
         else: ?>
             <article style="padding: 50px">
                 <h2>Ainda não existem Dentistas Cadastrados!</h2>
             </article>
         <?php endif; ?>
-
     </div>
-
 </section>
 <div class="container_paginator">
     <?= $paginator; ?>

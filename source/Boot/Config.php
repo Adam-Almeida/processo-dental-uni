@@ -1,14 +1,8 @@
 <?php
 /**
-* ARQUIVO DE CONFIGURAÇÃO - DESENVOLVIDO POR ADAM ALMEIDA
-* PROCESSO DENTAL UNI 2021
-**/
-
-/**-------------------------
- *
- * *CONFIG*
- *
- **-------------------------
+ * ARQUIVO DE CONFIGURAÇÃO - DESENVOLVIDO POR ADAM ALMEIDA
+ * PROCESSO DENTAL UNI 2021
+ **/
 
 /**
  * DATABASE::CONF
@@ -47,8 +41,8 @@ define("DATE_BR", "d-m-Y");
  * *HELPERS*
  *
  **-------------------------
-
-/**
+ *
+ * /**
  * PASSWORD VERIFY HELPER
  * @param string $password
  * @param string $hash
@@ -72,7 +66,7 @@ function is_email(string $email): bool
 
 function is_cro(int $cro): bool
 {
-    if (mb_strlen($cro) >= 3 && mb_strlen($cro) <= 11){
+    if (mb_strlen($cro) >= 3 && mb_strlen($cro) <= 11) {
         return true;
     }
     return false;
@@ -142,3 +136,17 @@ function redirect(string $url): void
         exit;
     }
 }
+
+
+/**
+ * @return null|string
+ */
+function flash(): ?string
+{
+    $session = new \Source\Core\Session();
+    if ($flash = $session->flash()) {
+        return $flash;
+    }
+    return null;
+}
+

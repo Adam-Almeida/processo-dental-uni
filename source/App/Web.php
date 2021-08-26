@@ -2,11 +2,13 @@
 
 namespace Source\App;
 
+
 use League\Plates\Engine;
+use Source\Boot\Message;
 use Source\Core\Pager;
 use Source\Models\Auth;
 use Source\Models\Dentist;
-use Source\Models\DentistSpecialty;
+use Source\Models\DentistSpeciality;
 
 
 /**
@@ -33,13 +35,14 @@ class Web
      */
     public function home(?array $data): void
     {
+
         //VALIDACAO DO NUMERO DA PAGINA NA URL
-        if(!empty($data['page']) && !is_numeric($data['page'])){
+        if (!empty($data['page']) && !is_numeric($data['page'])) {
             redirect("/");
             return;
         }
 
-        $dentistsAll = (new DentistSpecialty())->find();
+        $dentistsAll = (new DentistSpeciality())->find();
 
         $pager = new Pager(url("/"));
         $pager->pager($dentistsAll->count(), 5, ($data['page'] ?? 1), 2);
@@ -59,14 +62,14 @@ class Web
 
         $types = ['name', 'email', 'cro', 'cro_uf'];
 
-        if (!empty($data['s']) && !empty($data['tipo'] && in_array($data['tipo'], $types))){
+        if (!empty($data['s']) && !empty($data['tipo'] && in_array($data['tipo'], $types))) {
             $search = filter_var($data['s'], FILTER_SANITIZE_STRIPPED);
             $type = filter_var($data['tipo'], FILTER_SANITIZE_STRIPPED);
             redirect("/dentista/buscar/{$search}/{$type}/1");
             return;
         }
 
-        if (empty($data['terms'] || empty($data['tipo']))){
+        if (empty($data['terms'] || empty($data['tipo']))) {
             redirect("/");
             return;
         }
@@ -76,7 +79,7 @@ class Web
         $page = (filter_var($data['page'], FILTER_VALIDATE_INT) >= 1 ? $data['page'] : 1);
 
         $dentist = new Dentist();
-        $dentistSearch = $dentist->find("{$type} LIKE :s","s=%{$search}%")->fetch(true);
+        $dentistSearch = $dentist->find("{$type} LIKE :s", "s=%{$search}%")->fetch(true);
 
 
         echo $this->view->render("search", [
@@ -111,7 +114,7 @@ class Web
             $auth = new Auth();
             $login = $auth->login($data['email'], $data['password']);
 
-            if ($login){
+            if ($login) {
                 redirect("/admin/dash");
             }
 

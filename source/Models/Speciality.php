@@ -6,19 +6,17 @@ namespace Source\Models;
 
 use Source\Core\Model;
 
-class Specialty extends Model
+class Speciality extends Model
 {
     public function __construct()
     {
         parent::__construct('especialidades', ['id'], ['name']);
     }
 
-    public function bootstrap(string $name): Specialty
+    public function bootstrap(string $name): Speciality
     {
         $this->name = $name;
         return $this;
     }
-
-
 
 }

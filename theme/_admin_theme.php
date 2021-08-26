@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="<?= url("theme/_cdn/boot.css"); ?>" type="text/css">
     <link rel="stylesheet" href="<?= url("theme/_cdn/style.css"); ?>" type="text/css">
     <link rel="stylesheet" href="<?= url("theme/_cdn/admin.style.css"); ?>" type="text/css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </head>
 
 <body>
@@ -47,6 +49,7 @@
 </header>
 
 <main class="fadeIn">
+    <?= flash(); ?>
     <!--  begin::content  -->
     <?= $v->section("content"); ?>
     <!--  end::content  -->
@@ -55,7 +58,8 @@
 
 <footer class="main_footer">
     <div class="main_footer_content">
-        <p>Aplicação desenvolvida por Adam Almeida para o processo seletivo de PHP Developer - DENTAL UNI - Agosto 2021</p>    </div>
+        <p>Aplicação desenvolvida por Adam Almeida para o processo seletivo de PHP Developer - DENTAL UNI - Agosto
+            2021</p></div>
 </footer>
 
 

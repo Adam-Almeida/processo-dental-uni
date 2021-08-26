@@ -3,11 +3,13 @@
 namespace Source\App;
 
 use League\Plates\Engine;
+use Source\Boot\Message;
 use Source\Core\Pager;
+use Source\Core\Session;
 use Source\Models\Auth;
 use Source\Models\Dentist;
-use Source\Models\DentistSpecialty;
-use Source\Models\Specialty;
+use Source\Models\DentistSpeciality;
+use Source\Models\Speciality;
 
 
 /**
@@ -23,14 +25,17 @@ class Admin
      */
     protected $view;
 
+    protected $message;
+
     /**
      * Admin constructor.
      */
     public function __construct()
     {
         $this->view = Engine::create(__DIR__ . "/../../theme/", "php");
+        $this->message = new Message();
 
-        if (!Auth::user()){
+        if (!Auth::user()) {
             redirect("/login");
         }
     }
@@ -42,21 +47,21 @@ class Admin
     public function adminArea(?array $data): void
     {
         //VALIDACAO DO NUMERO DA PAGINA NA URL
-        if(!empty($data['page']) && !is_numeric($data['page'])){
+        if (!empty($data['page']) && !is_numeric($data['page'])) {
             redirect("/admin/dash");
             return;
         }
 
-        $dentistsAll = (new DentistSpecialty())->find();
+        $dentistsAll = (new DentistSpeciality())->find();
 
-        $specialityAll = (new Specialty())->find()->fetch(true);
+        $specialityAll = (new Speciality())->find()->fetch(true);
 
         $pager = new Pager(url("/admin/dash/"));
         $pager->pager($dentistsAll->count(), 3, ($data['page'] ?? 1), 2);
 
         echo $this->view->render("dash", [
             "title" => "LISTA DE DENTISTAS | PROCESSO DENTAL UNI",
-            "user" => Auth::user()->first_name ." ". Auth::user()->last_name,
+            "user" => Auth::user()->first_name . " " . Auth::user()->last_name,
             "dentistsAll" => $dentistsAll->limit($pager->limit())->offset($pager->offset())->fetch(true),
             "specialityAll" => $specialityAll,
             "paginator" => $pager->render()
@@ -68,11 +73,11 @@ class Admin
      */
     public function specialityArea(): void
     {
-        $specialityAll = (new Specialty())->find()->fetch(true);
+        $specialityAll = (new Speciality())->find()->fetch(true);
 
         echo $this->view->render("speciality", [
             "title" => "LISTA DE ESPECIALIDADES | PROCESSO DENTAL UNI",
-            "user" => Auth::user()->first_name ." ". Auth::user()->last_name,
+            "user" => Auth::user()->first_name . " " . Auth::user()->last_name,
             "specialityAll" => $specialityAll
         ]);
     }
@@ -80,13 +85,14 @@ class Admin
     /**
      * Metodo de criacao de Especialidades
      */
-    public function specialityCreate(){
+    public function specialityCreate()
+    {
 
         $post = (object)filter_input_array(INPUT_POST, FILTER_SANITIZE_STRIPPED);
 
         if (!empty($post)) {
 
-            $speciality = new Specialty();
+            $speciality = new Speciality();
             $speciality->bootstrap($post->name);
             $speciality->save();
             redirect("./admin/especialidades");
@@ -102,30 +108,30 @@ class Admin
      */
     public function specialityUpdate(array $data)
     {
-        if (!empty($data['id']) && !is_numeric($data['id'])){
+        if (!empty($data['id']) && !is_numeric($data['id'])) {
             redirect("/admin/especialidades");
             return;
         }
 
-        if (!empty($data['name'])){
+        if (!empty($data['name'])) {
             $editId = filter_var($data['id'], FILTER_VALIDATE_INT);
             $post = filter_var($data['name'], FILTER_SANITIZE_SPECIAL_CHARS);
 
-            $speciality = (new Specialty())->findById($editId);
+            $speciality = (new Speciality())->findById($editId);
             $speciality->name = $post;
 
-            if ($speciality->save()){
+            if ($speciality->save()) {
                 redirect("/admin/especialidades");
             }
 
-        }else{
-            $specialityAll = (new Specialty())->find()->fetch(true);
+        } else {
+            $specialityAll = (new Speciality())->find()->fetch(true);
 
             echo $this->view->render("speciality", [
                 "title" => "LISTA DE ESPECIALIDADES | PROCESSO DENTAL UNI",
-                "user" => Auth::user()->first_name ." ". Auth::user()->last_name,
+                "user" => Auth::user()->first_name . " " . Auth::user()->last_name,
                 "specialityAll" => $specialityAll,
-                "edit" => (new Specialty())->findById($data['id'])
+                "edit" => (new Speciality())->findById($data['id'])
             ]);
 
         }
@@ -137,21 +143,21 @@ class Admin
      */
     public function specialityDelete(array $data)
     {
-        if (!empty($data['id']) && !is_numeric($data['id'])){
+        if (!empty($data['id']) && !is_numeric($data['id'])) {
             redirect("/admin/dash");
             return;
         }
 
         $idSpecility = filter_var($data['id'], FILTER_SANITIZE_SPECIAL_CHARS);
 
-        $specility = (new Specialty())->findById($idSpecility);
+        $specility = (new Speciality())->findById($idSpecility);
 
-        if (!$specility){
+        if (!$specility) {
             redirect("/admin/especialidades");
             return;
         }
 
-        if ($specility->destroy()){
+        if ($specility->destroy()) {
             redirect("/admin/especialidades");
             return;
         }
@@ -165,19 +171,19 @@ class Admin
     public function dentistCreate(?array $data): void
     {
         //VALIDA SE OS CAMPOS ESTAO VAZIOS
-        if (in_array("", $data)){
+        if (in_array("", $data)) {
             redirect("/admin/dash");
             return;
         }
 
         //VALIDA O CAMPO EMAIL
-        if (!is_email($data['email'])){
+        if (!is_email($data['email'])) {
             redirect("/admin/dash");
             return;
         }
 
         //VALIDA O CAMPO CRO QTD MIN E MAX
-        if (!is_cro($data['cro'])){
+        if (!is_cro($data['cro'])) {
             redirect("./");
             return;
         }
@@ -191,7 +197,7 @@ class Admin
             $data->cro_uf
         );
 
-        if ($dentist->save()){
+        if ($dentist->save()) {
             $dentist->saveTrue($data->especialidade, $dentist->id);
             redirect("/admin/dash");
         }
@@ -210,22 +216,22 @@ class Admin
 
         $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
 
-        if (!empty($data['name'])){
+        if (!empty($data['name'])) {
 
             //VALIDA SE OS CAMPOS ESTAO VAZIOS
-            if (in_array("", $data)){
+            if (in_array("", $data)) {
                 redirect("/admin/dash");
                 return;
             }
 
             //VALIDA O CAMPO EMAIL
-            if (!is_email($data['email'])){
+            if (!is_email($data['email'])) {
                 redirect("/admin/dash");
                 return;
             }
 
             //VALIDA O CAMPO CRO QTD MIN E MAX
-            if (!is_cro($data['cro'])){
+            if (!is_cro($data['cro'])) {
                 redirect("./");
                 return;
             }
@@ -238,14 +244,14 @@ class Admin
             $dentist->cro = $data->cro;
             $dentist->cro_uf = $data->cro_uf;
 
-            if ($dentist->save()){
+            if ($dentist->save()) {
                 $dentist->updateTrue($data->especialidade, $dentist->id);
                 redirect("/admin/dash");
             }
 
-        }else{
+        } else {
 
-            if(!empty($data['page']) && !is_numeric($data['page'])){
+            if (!empty($data['page']) && !is_numeric($data['page'])) {
                 redirect("/admin/dash");
                 return;
             }
@@ -257,8 +263,8 @@ class Admin
                 redirect("./");
             }
 
-            $dentistsAll = (new DentistSpecialty())->find();
-            $specialityAll = (new Specialty())->find()->fetch(true);
+            $dentistsAll = (new DentistSpeciality())->find();
+            $specialityAll = (new Speciality())->find()->fetch(true);
 
             $pager = new Pager(url("/admin/dash/"));
             $pager->pager($dentistsAll->count(), 3, ($data['page'] ?? 1), 2);
@@ -290,47 +296,37 @@ class Admin
         $dataId = filter_var($data['id'], FILTER_VALIDATE_INT);
 
         $dentistById = (new Dentist())->findById($dataId);
-        $specialityDentist = (new DentistSpecialty())
+        $specialityDentist = (new DentistSpeciality())
             ->find("dentista_id = :dentista_id", "dentista_id={$dataId}")->fetch();
 
         //VALIDA EXISTENCIA DE AMBOS REGISTROS
-        if (empty($dentistById) || empty($specialityDentist)){
+        if (empty($dentistById) || empty($specialityDentist)) {
             redirect("/admin/dash");
             return;
         }
 
         //EXCLUI AMBOS REGISTROS
-        if ($dentistById->destroy()){
+        if ($dentistById->destroy()) {
             $specialityDentist->destroy();
-            var_dump(true);
-            die();
+
+            $this->message->renderMessage("Dentista excluido com sucesso", "Bom Trabalho",
+                "success")->flash();
+
+            redirect("/admin/dash");
         }
     }
 
+
     /**
-     * @return mixed
+     * Set flash Session Key
      */
-    public function getMessage()
+    public function flash(): void
     {
-        return $this->message;
+        (new Session())->set("flash", $this);
     }
 
     /**
-     * @param string $type
-     * @param string $text
-     * @return object
-     */
-    public function message(string $type, string $text): object
-    {
-        return $this->message = (object)[
-            "type" => $type,
-            "text" => $text
-        ];
-    }
-
-
-    /**
-     *
+     * Metdodo para sair do Sistema ={
      */
     public function exit(): void
     {

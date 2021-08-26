@@ -51,15 +51,14 @@
 </header>
 
 <main class="fadeIn">
-
     <article class="main_search">
         <div class="main_search_content">
             <header>
                 <h1>Confira a validade dos dados do seu dentista</h1>
                 <p>Informe o nome, especialidade ou cro e faça sua busca</p>
             </header>
-            <form action="<?= urlLink('/dentista/buscar'); ?>" enctype="multipart/form-data" method="post"">
-
+            <form action="<?= urlLink('/dentista/buscar'); ?>" enctype="multipart/form-data" method="post"
+            ">
             <input type="text" name="s" placeholder="Digite aqui =)">
             <select type="text" name="tipo">
                 <option value="name">Nome</option>
@@ -79,7 +78,8 @@
 
 <footer class="main_footer">
     <div class="main_footer_content">
-        <p>Aplicação desenvolvida por Adam Almeida para o processo seletivo de PHP Developer - DENTAL UNI - Agosto 2021</p>
+        <p>Aplicação desenvolvida por Adam Almeida para o processo seletivo de PHP Developer - DENTAL UNI - Agosto
+            2021</p>
     </div>
 </footer>
 
@@ -87,5 +87,4 @@
 <script src="<?= url("theme/_cdn/js/main.js"); ?>"></script>
 
 </body>
-
 </html>

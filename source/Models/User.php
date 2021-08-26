@@ -50,5 +50,4 @@ class User extends Model
         $find = $this->find("email = :email", "email={$email}", $columns);
         return $find->fetch();
     }
-
 }
