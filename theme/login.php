@@ -18,10 +18,8 @@
     </ul>
 </nav>
 <?php $v->stop(); ?>
-<?php if (!empty($message) && $message['text'] != null): ?>
-    <div class="message message-<?= $message['type']; ?> icon-checkmark2"><?= $message['text']; ?></div>
-<?php endif; ?>
 <section class="main_login">
+    <?= flash(); ?>
     <header class="radius">
         <h1>ACESSO ADMINISTRATIVO</h1>
         <p>Utilize a senha padrão</p>

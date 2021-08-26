@@ -5,7 +5,6 @@ namespace Source\App;
 use League\Plates\Engine;
 use Source\Boot\Message;
 use Source\Core\Pager;
-use Source\Core\Session;
 use Source\Models\Auth;
 use Source\Models\Dentist;
 use Source\Models\DentistSpeciality;
@@ -20,11 +19,10 @@ use Source\Models\Speciality;
  */
 class Admin
 {
-    /**
-     * @var Engine
-     */
+    /** @var Engine */
     protected $view;
 
+    /** @var Message */
     protected $message;
 
     /**
@@ -94,11 +92,14 @@ class Admin
 
             $speciality = new Speciality();
             $speciality->bootstrap($post->name);
-            $speciality->save();
-            redirect("./admin/especialidades");
-            return;
-        }
 
+            if ($speciality->save()) {
+                $this->message("Especialidade criada com sucesso", "Bom Trabalho", "success");
+                redirect("./admin/especialidades");
+                return;
+            }
+        }
+        $this->message("Erro ao criar especialidade", "Que Pena!", "error");
         redirect("./admin/especialidades");
     }
 
@@ -121,8 +122,14 @@ class Admin
             $speciality->name = $post;
 
             if ($speciality->save()) {
+                $this->message("A Especialidade {$speciality->name} foi atualizada!", "Bom Trabalho",
+                    "success");
                 redirect("/admin/especialidades");
+                return;
             }
+
+            $this->message("Erro ao atualizar especialidade", "Que Pena!", "error");
+            redirect("./admin/especialidades");
 
         } else {
             $specialityAll = (new Speciality())->find()->fetch(true);
@@ -153,14 +160,17 @@ class Admin
         $specility = (new Speciality())->findById($idSpecility);
 
         if (!$specility) {
-            redirect("/admin/especialidades");
+            $this->message("A especialidade não foi encontrada", "Oppsss!", "info");
+            redirect("./admin/especialidades");
             return;
         }
 
         if ($specility->destroy()) {
+            $this->message("Especialidade foi excluida com sucesso", "Bom Trabalho!", "error");
             redirect("/admin/especialidades");
             return;
         }
+        $this->message("Erro ao fazer exclusão!", "Oppsss", "warning");
         redirect("/admin/especialidades");
     }
 
@@ -172,19 +182,22 @@ class Admin
     {
         //VALIDA SE OS CAMPOS ESTAO VAZIOS
         if (in_array("", $data)) {
+            $this->message("Preencha todos os campos", "Ops! É rapidinho!", "warning");
             redirect("/admin/dash");
             return;
         }
 
         //VALIDA O CAMPO EMAIL
         if (!is_email($data['email'])) {
+            $this->message("O Email informato não é válido", "Hey! Corrija o email!", "warning");
             redirect("/admin/dash");
             return;
         }
 
         //VALIDA O CAMPO CRO QTD MIN E MAX
         if (!is_cro($data['cro'])) {
-            redirect("./");
+            $this->message("O CRO deve conter entre 3 e 11 Números", "Hey! Corrija o CRO!", "warning");
+            redirect("/admin/dash");
             return;
         }
 
@@ -199,8 +212,13 @@ class Admin
 
         if ($dentist->save()) {
             $dentist->saveTrue($data->especialidade, $dentist->id);
+            $this->message("O Dentista {$dentist->name} foi criado com sucesso", "Bom Trabalho!",
+                "success");
             redirect("/admin/dash");
+            return;
         }
+        $this->message("Erro ao realizar o cadastro", "Que Pena!", "error");
+        redirect("/admin/dash");
     }
 
     /**
@@ -220,19 +238,23 @@ class Admin
 
             //VALIDA SE OS CAMPOS ESTAO VAZIOS
             if (in_array("", $data)) {
+                $this->message("Preencha todos os campos", "Ops! É rapidinho!", "warning");
                 redirect("/admin/dash");
                 return;
             }
 
             //VALIDA O CAMPO EMAIL
             if (!is_email($data['email'])) {
+                $this->message("O Email informato não é válido", "Hey! Corrija o email!", "warning");
                 redirect("/admin/dash");
                 return;
             }
 
             //VALIDA O CAMPO CRO QTD MIN E MAX
             if (!is_cro($data['cro'])) {
-                redirect("./");
+                $this->message("O CRO deve conter entre 3 e 11 Números", "Hey! Corrija o CRO!",
+                    "warning");
+                redirect("/admin/dash");
                 return;
             }
 
@@ -246,8 +268,14 @@ class Admin
 
             if ($dentist->save()) {
                 $dentist->updateTrue($data->especialidade, $dentist->id);
+                $this->message("O Dentista {$dentist->name} foi atualizado com sucesso", "Bom Trabalho!",
+                    "success");
                 redirect("/admin/dash");
+                return;
             }
+
+            $this->message("Erro ao realizar o cadastro", "Que Pena!", "error");
+            redirect("/admin/dash");
 
         } else {
 
@@ -260,7 +288,9 @@ class Admin
             $dentistEdit = (new Dentist())->findById($dentistId);
 
             if (!$dentistEdit) {
-                redirect("./");
+                $this->message("O dentista informado não foi encontradao", "Oppsss!", "info");
+                redirect("./admin/dash");
+                return;
             }
 
             $dentistsAll = (new DentistSpeciality())->find();
@@ -278,8 +308,6 @@ class Admin
                 "edit" => $dentistEdit
             ]);
         }
-
-
     }
 
     /**
@@ -301,6 +329,7 @@ class Admin
 
         //VALIDA EXISTENCIA DE AMBOS REGISTROS
         if (empty($dentistById) || empty($specialityDentist)) {
+            $this->message("Não foram econtrados registros para este dentista", "Oppsss!", "warning");
             redirect("/admin/dash");
             return;
         }
@@ -308,21 +337,19 @@ class Admin
         //EXCLUI AMBOS REGISTROS
         if ($dentistById->destroy()) {
             $specialityDentist->destroy();
-
-            $this->message->renderMessage("Dentista excluido com sucesso", "Bom Trabalho",
-                "success")->flash();
-
-            redirect("/admin/dash");
+            $this->message("Dentista excluido com sucesso", "Bom Trabalho!", "error");
+            redirect("./admin/dash");
         }
     }
 
-
     /**
-     * Set flash Session Key
+     * @param string $message
+     * @param string $title
+     * @param string $type
      */
-    public function flash(): void
+    protected function message(string $message, string $title, string $type)
     {
-        (new Session())->set("flash", $this);
+        return $this->message->renderMessage($message, $title, $type)->flash();
     }
 
     /**
@@ -330,6 +357,7 @@ class Admin
      */
     public function exit(): void
     {
+        $this->message("Ótimo Descanso e até logo.", "Volte Sempre!", "success");
         Auth::logout();
         redirect("/login");
     }

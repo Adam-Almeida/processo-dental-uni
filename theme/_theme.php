@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="<?= url("theme/_cdn/fonticon.css"); ?>" type="text/css">
     <link rel="stylesheet" href="<?= url("theme/_cdn/boot.css"); ?>" type="text/css">
     <link rel="stylesheet" href="<?= url("theme/_cdn/style.css"); ?>" type="text/css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -51,6 +52,7 @@
 </header>
 
 <main class="fadeIn">
+    <?= flash(); ?>
     <article class="main_search">
         <div class="main_search_content">
             <header>

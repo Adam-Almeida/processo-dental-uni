@@ -23,11 +23,17 @@ class Web
     private $view;
 
     /**
+     * @var Message
+     */
+    private $message;
+
+    /**
      * Web constructor.
      */
     public function __construct()
     {
         $this->view = Engine::create(__DIR__ . "/../../theme/", "php");
+        $this->message = new Message();
     }
 
     /**
@@ -97,18 +103,13 @@ class Web
         if (!empty($data['csrf'])) {
 
             if (empty($data['email']) || empty($data['password'])) {
-
-                $text = ("Preencha todos os campos" ?? null);
-                $type = ("warning" ?? null);
-
+                $this->message("Os dados não podem estar em branco", "Opss! Login Incorreto", "warning");
+                redirect("/login");
                 echo $this->view->render("login", [
-                    "title" => "LOGIN | PROCESSO DENTAL UNI",
-                    "message" => [
-                        "text" => $text,
-                        "type" => $type
-                    ]
+                    "title" => "LOGIN | PROCESSO DENTAL UNI"
                 ]);
-                return;
+
+                die();
             }
 
             $auth = new Auth();
@@ -118,23 +119,23 @@ class Web
                 redirect("/admin/dash");
             }
 
-            $messageAuth = $auth->getMessage();
-
-            echo $this->view->render("login", [
-                "title" => "LOGIN | PROCESSO DENTAL UNI",
-                "message" => [
-                    "text" => $messageAuth->text,
-                    "type" => $messageAuth->type
-                ]
-            ]);
-            return;
-
+            $this->message("Os dados informados estão incorretos!", "Opss! Login Incorreto", "error");
+            redirect("/login");
         }
 
         echo $this->view->render("login", [
-            "title" => "LOGIN | PROCESSO DENTAL UNI",
-            "message"
+            "title" => "LOGIN | PROCESSO DENTAL UNI"
         ]);
+    }
+
+    /**
+     * @param string $message
+     * @param string $title
+     * @param string $type
+     */
+    protected function message(string $message, string $title, string $type)
+    {
+        return $this->message->renderMessage($message, $title, $type)->flash();
     }
 
     /**
