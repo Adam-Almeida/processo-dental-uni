@@ -20,7 +20,7 @@ $route->get("/{page}", "Web:home");
 $route->get("/login", "Web:login");
 $route->post("/login", "Web:login");
 $route->post("/dentista/buscar", "Web:search");
-$route->get("/dentista/buscar/{terms}/{page}", "Web:search");
+$route->get("/dentista/buscar/{terms}/{tipo}/{page}", "Web:search");
 
 /**
  *ADMIN ROUTES

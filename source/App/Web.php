@@ -7,6 +7,7 @@ use Source\Core\Pager;
 use Source\Models\Auth;
 use Source\Models\Dentist;
 use Source\Models\DentistSpecialty;
+use Source\Models\Specialty;
 
 /**
  * Class Web
@@ -51,16 +52,33 @@ class Web
 
     public function search(?array $data): void
     {
-        if (!empty($data['s'])){
+
+        $types = ['name', 'email', 'cro', 'cro_uf'];
+
+        if (!empty($data['s']) && !empty($data['tipo'] && in_array($data['tipo'], $types))){
             $search = filter_var($data['s'], FILTER_SANITIZE_STRIPPED);
-            redirect("/dentista/buscar/{$search}/1");
+            $type = filter_var($data['tipo'], FILTER_SANITIZE_STRIPPED);
+            redirect("/dentista/buscar/{$search}/{$type}/1");
             return;
         }
+
+        if (empty($data['terms'] || empty($data['tipo']))){
+            redirect("/");
+            return;
+        }
+
+        $search = filter_var($data['terms'], FILTER_SANITIZE_STRIPPED);
+        $type = filter_var($data['tipo'], FILTER_SANITIZE_STRIPPED);
+        $page = (filter_var($data['page'], FILTER_VALIDATE_INT) >= 1 ? $data['page'] : 1);
+
+        $dentist = new Dentist();
+        $dentistSearch = $dentist->find("({$type} LIKE :s)","s=%{$search}%")->fetch(true);
+
 
         echo $this->view->render("search", [
             "title" => "HOME | PROCESSO DENTAL UNI",
             "search" => ($search ?? null),
-            "paginator" => ""
+            "dentistsAll" => $dentistSearch
         ]);
     }
 

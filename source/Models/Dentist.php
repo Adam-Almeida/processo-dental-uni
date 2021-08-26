@@ -44,4 +44,20 @@ class Dentist extends Model
 
     }
 
+    public function speciality()
+    {
+        if (!empty($this->id)){
+            $speciality = (new DentistSpecialty())->find("dentista_id = :id", "id={$this->id}", "especialidade_id")->fetch();
+
+            if ($speciality){
+                $specialityname = (new Specialty())->findById((int)$speciality->especialidade_id);
+                return $specialityname;
+            }
+            return null;
+        }
+
+        return null;
+
+    }
+
 }

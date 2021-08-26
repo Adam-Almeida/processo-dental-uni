@@ -51,6 +51,27 @@
 </header>
 
 <main class="fadeIn">
+
+    <article class="main_search">
+        <div class="main_search_content">
+            <header>
+                <h1>Confira a validade dos dados do seu dentista</h1>
+                <p>Informe o nome, especialidade ou cro e faça sua busca</p>
+            </header>
+            <form action="<?= urlLink('/dentista/buscar'); ?>" enctype="multipart/form-data" method="post"">
+
+            <input type="text" name="s" placeholder="Digite aqui =)">
+            <select type="text" name="tipo">
+                <option value="name">Nome</option>
+                <option value="email">Email</option>
+                <option value="cro">CRO</option>
+                <option value="cro_uf">UF</option>
+            </select>
+            <button type="submit">Buscar</button>
+            </form>
+        </div>
+    </article>
+
     <!--  begin::content  -->
     <?= $v->section("content"); ?>
     <!--  end::content  -->

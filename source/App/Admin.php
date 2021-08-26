@@ -54,7 +54,6 @@ class Admin
             "specialityAll" => $specialityAll,
             "paginator" => $pager->render()
         ]);
-
     }
 
     public function specialityArea(): void
