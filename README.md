@@ -12,7 +12,7 @@ Utilize o código apenas como estudo e base para o seu aprendizado.
 > - CRUD DE DENTISTAS
 > - CRUD DE ESPECIALIDADE
 > - EXIBIÇÃO DE DENTISTAS WEB
-> - LISTAGEM DE DENTISTAS POR ESPECIALIDADE
+> - BUSCA DE DENTISTAS
 > - ÁREA DE ADMINISTRAÇÃO - OPCIONAL PELO AVALIADO
 > - AUTENTICAÇÃO - OPCIONAL PELO AVALIADO
 > - LAYOUT RESPONSIVO EM AMBAS AS ÁREAS
@@ -35,6 +35,7 @@ Utilize o código apenas como estudo e base para o seu aprendizado.
 > - coffeecode/router - 1.0.8^
 > - coffeecode/paginator - 1.0.8^
 > - league/plates - v4.0.0-alpha
+> - SweetAlert - Via Cdn
 
 ## Ambiente Local
 
@@ -50,7 +51,7 @@ Editar as linhas do arquivo de acordo com o seu ambiente
 
 define("CONF_DB_HOST", "localhost");
 define("CONF_DB_USER", "root");
-define("CONF_DB_PASS", "");
+define("CONF_DB_PASS", "root");
 define("CONF_DB_NAME", "processoSeletivo2021_Adam_Almeida");
 
 ```
@@ -64,6 +65,19 @@ define("CONF_DB_NAME", "processoSeletivo2021_Adam_Almeida");
 define("ROOT", "http://www.localhost:8080/processo-dental-uni");
 
 ```
+
+## Ambiente Deploy
+
+Link para acesso a aplicação em funcionamento e dados de acesso ao ADMIN
+
+> https://inconclusive-hyphen.000webhostapp.com/
+> 
+
+:: DADOS DE ACESSO LOCAL E REMOTO LOGIN E SENHA ::
+
+> LOGIN: adam.designjuridico@gmail.com
+> SENHA: 12345678
+
 ## Arquivo composer.json
 
 > Localização do arquivo :: <strong>composer.json</strong>
