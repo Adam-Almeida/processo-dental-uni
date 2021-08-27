@@ -22,10 +22,10 @@
                         <div class="main_dentists_article_right">
                             <a href="<?= urlLink("/admin/dentista/editar/{$dentist->dentist()->id}") ?>"
                                class="main_dentists_article_left_button main_dentists_article_left_button_edit"><i
-                                        class="icon-pencil2"></i> Editar Dentista</a>
+                                        class="icon-pencil2"></i> Editar</a>
                             <a href="<?= urlLink("/admin/dentista/excluir/{$dentist->dentist()->id}") ?>"
                                class="main_dentists_article_left_button main_dentists_article_left_button_delete"><i
-                                        class="icon-bin"></i> Excluir Dentista</a>
+                                        class="icon-bin"></i> Excluir</a>
                         </div>
 
                     </article>
