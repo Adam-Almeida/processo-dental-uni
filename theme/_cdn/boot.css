@@ -23,6 +23,13 @@
     display: none !important;
 }
 
+.small-text{
+    font-size: 0.8em;
+    color: #f1bd00;
+    padding-right: 10px;
+    padding-top: 10px;
+}
+
 /** FADE IN PAGE **/
 
 @-webkit-keyframes fadeIn {

@@ -8,26 +8,30 @@
                 <h1>Dentistas Cadastrados</h1>
                 <br>
                 <?php foreach ($dentistsAll as $dentist): ?>
-                    <article style="border-bottom: #ffffff 1px solid; margin-bottom: 10px">
+                    <article style="border-bottom: #ffffff 1px solid; padding-bottom: 10px; margin-bottom: 10px">
                         <div class="main_dentists_article_left">
-                            <h2 id="value-real-dentist"><?= $dentist->name ?></h2>
+                            <h2 id="value-real-dentist"><?= $dentist->name ?>
+                               <span> <a href="<?= urlLink("/admin/dentista/editar/{$dentist->id}") ?>"
+                                   class="main_dentists_article_left_button
+                                   main_dentists_article_left_button_edit"><i
+                                            class="icon-pencil2"></i> Editar</a>
+                                   <a href="<?= urlLink("/admin/dentista/excluir/{$dentist->id}") ?>"
+                                      class="main_dentists_article_left_button main_dentists_article_left_button_delete"><i
+                                            class="icon-bin"></i> Excluir</a>
+                               </span>
+                            </h2>
                             <p class="icon-aid-kit">
                                 CRO <?= $dentist->cro . " - " . $dentist->cro_uf; ?>
                                 <span class="icon-mail4"><?= $dentist->email; ?></span>
                             </p>
 
-                            <p class="icon-user-plus">
-                                <?= var_dump($dentist->speciality()); ?></p>
+                            <?php if($dentist->speciality()): ?>
+                                <?php foreach ($dentist->speciality() as $dentistSpeciality):?>
+                                    <span class="icon-user-plus small-text"><?= ($dentistSpeciality->name ?? "Especialidade Não Econtrada") ?></span>
+                                <?php endforeach; else:?>
+                                <span class="small-text">Especialidade Não Econtrada</span>
+                            <?php endif; ?>
 
-                        </div>
-
-                        <div class="main_dentists_article_right">
-                            <a href="<?= urlLink("/admin/dentista/editar/{$dentist->dentist()->id}") ?>"
-                               class="main_dentists_article_left_button main_dentists_article_left_button_edit"><i
-                                        class="icon-pencil2"></i> Editar</a>
-                            <a href="<?= urlLink("/admin/dentista/excluir/{$dentist->dentist()->id}") ?>"
-                               class="main_dentists_article_left_button main_dentists_article_left_button_delete"><i
-                                        class="icon-bin"></i> Excluir</a>
                         </div>
 
                     </article>

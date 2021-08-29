@@ -51,7 +51,7 @@ class Admin
             return;
         }
 
-        $dentistsAll = (new DentistSpeciality())->order("id DESC")->find(true);
+        $dentistsAll = (new Dentist())->order('id DESC')->find();
 
         $specialityAll = (new Speciality())->find()->fetch(true);
 
@@ -204,7 +204,7 @@ class Admin
         }
 
         //VALIDA O ARRAY DE ESPECIALIDADE
-        if (!is_array($data['especialidade'])){
+        if (!is_array($data['especialidade'])) {
             $this->message("Erro ao preencheras especialidades", "Algo deu Errado!!", "warning");
             redirect("/admin/dash");
             return;
@@ -220,7 +220,7 @@ class Admin
         );
 
         if ($dentist->save()) {
-            foreach ($data->especialidade as $specialityItem){
+            foreach ($data->especialidade as $specialityItem) {
                 $dentist->saveTrue($specialityItem, $dentist->id);
             }
 
@@ -336,11 +336,10 @@ class Admin
         $dataId = filter_var($data['id'], FILTER_VALIDATE_INT);
 
         $dentistById = (new Dentist())->findById($dataId);
-        $specialityDentist = (new DentistSpeciality())
-            ->find("dentista_id = :dentista_id", "dentista_id={$dataId}")->fetch();
 
-        //VALIDA EXISTENCIA DE AMBOS REGISTROS
-        if (empty($dentistById) || empty($specialityDentist)) {
+
+        //VALIDA EXISTENCIA DE UM DENTISTA
+        if (empty($dentistById)) {
             $this->message("Não foram econtrados registros para este dentista", "Oppsss!", "warning");
             redirect("/admin/dash");
             return;
@@ -348,10 +347,20 @@ class Admin
 
         //EXCLUI AMBOS REGISTROS
         if ($dentistById->destroy()) {
-            $specialityDentist->destroy();
-            $this->message("Dentista excluido com sucesso", "Bom Trabalho!", "error");
+            $specialityDentist = (new DentistSpeciality())
+                ->find("dentista_id = :dentista_id", "dentista_id={$dataId}")
+                ->fetch(true);
+
+            foreach ($specialityDentist as $speciality) {
+                $speciality->destroy();
+            }
+
+            $this->message("<span style='text-align: center'>O Dentista foi excluido com sucesso</span>", "Bom Trabalho!", "error");
             redirect("./admin/dash");
         }
+        $this->message("<span style='text-align: center'>Erro ao fazer a escusão do dentista</span>", "Bom Trabalho!",
+            "error");
+        redirect("./admin/dash");
     }
 
     /**

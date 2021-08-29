@@ -241,7 +241,16 @@
 }
 
 .main_dentists_article_left{
-    flex-basis: 70%;
+    flex-basis: 100%;
+}
+
+.main_dentists_article_left h2 span{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.main_dentists_article_left h2 span a{
+    margin: 0px 5px 0px 0px;
 }
 
 .main_dentists_article_left_button{
@@ -286,23 +295,28 @@
 }
 
 .main_dentists_article_right{
+    flex-basis: 80%;
     padding: 10px;
     font-size: 1em;
-    text-align: center;
-    justify-content: center;
+    text-align: left;
+    background-color: #CCCCCC;
+    border-radius: 5px;
 }
 
 .main_dentists_article_right p{
-    font-weight: 400;
+    font-weight: 200;
+    font-size: 0.8em;
     color:#2D3142;
 }
 
-
 .main_dentists_article_left h2{
+    display: flex;
+    justify-content: space-between;
     flex-basis: 45%;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.2em;
+    font-size: 1em;
     color: #e38100;
+    padding: 10px 0px 10px 0px;
 }
 
 .main_dentists_article_left p{
@@ -310,8 +324,6 @@
     margin-top: 2px;
     font-size: 0.9em;
 }
-
-
 
 /** MAIN FOOTER **/
 

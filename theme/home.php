@@ -21,9 +21,9 @@
                         <div class="main_dentists_article_right">
                             <?php if($dentist->speciality()): ?>
                             <?php foreach ($dentist->speciality() as $dentistSpeciality):?>
-                                <p><?= ($dentistSpeciality->name ?? "Especialidade Não Econtrada") ?></p>
+                                <p class="icon-plus"><?= ($dentistSpeciality->name ?? "Especialidade Não Econtrada") ?></p>
                             <?php endforeach; else:?>
-                            <p>Especialidade Não Econtrada</p>
+                            <p class="icon-plus">Especialidade Não Econtrada</p>
                             <?php endif; ?>
                         </div>
                     </article>

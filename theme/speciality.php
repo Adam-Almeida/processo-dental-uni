@@ -9,16 +9,19 @@
                 <?php foreach ($specialityAll as $speciality): ?>
                     <article style="border-bottom: #ffffff 1px solid; margin-bottom: 10px">
                         <div class="main_dentists_article_left">
-                            <h2 id="value-real-dentist"><?= $speciality->name ?></h2>
-                        </div>
-                        <div class="main_dentists_article_right" style="text-align: right; ">
+                            <h2 id="value-real-dentist"><?= $speciality->name ?>
+                            <span>
+
                             <a href="<?= urlLink("/admin/especialidade/editar/{$speciality->id}") ?>"
                                class="main_dentists_article_left_button main_dentists_article_left_button_edit"><i
                                         class="icon-pencil2"></i> Editar</a>
                             <a href="<?= urlLink("/admin/especialidade/excluir/{$speciality->id}") ?>"
                                class="main_dentists_article_left_button main_dentists_article_left_button_delete"><i
                                         class="icon-bin"></i> Excluir</a>
+                        </span>
+                            </h2>
                         </div>
+
                     </article>
                 <?php endforeach; ?>
             <?php
