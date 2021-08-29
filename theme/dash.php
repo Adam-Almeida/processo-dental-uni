@@ -138,7 +138,7 @@
                         <option value="DF">DF</option>
                     </select>
                     <label for="especialidade">Selecione a Especialidade</label>
-                    <select name="especialidade">
+                    <select name="especialidade[1]">
                         <?php if (!empty($specialityAll)):
                             foreach ($specialityAll as $speciality):
                                 ?>
@@ -146,12 +146,12 @@
                             <?php endforeach;
                         else:
                             ?>
-                            <option value="PR" selected>PR</option>
+                            <option value="Odontologia" selected>Odontologia</option>
                         <?php endif; ?>
                     </select>
                     <div id="add-speciality"
                        class="main_dentists_article_left_button main_dentists_article_left_button_add">
-                        <i class="icon-pencil2"></i>Add Especialidade</div>
+                        <i class="icon-plus"></i>Adicionar Especialidade</div>
 
                     <div style="width: 100%" id="add-speciality-content"></div>
 
@@ -165,6 +165,42 @@
         </header>
     </div>
 </section>
+
+<?= $v->start("scripts"); ?>
+<script>
+    $(function () {
+        var divContent = $('#add-speciality-content');
+        var botaoAdicionar = $('#add-speciality');
+        var i = 2;
+
+        $(botaoAdicionar).click(function () {
+            $(
+                '<div class="uniqueSelect">' +
+                '<select style="width: 100%; margin-bottom: 5px;" name="especialidade['+ i +'] ">' +
+                '<?php if (!empty($specialityAll)): foreach ($specialityAll as $speciality): ?>' +
+                '<option value="<?= $speciality->id; ?>"><?= $speciality->name; ?></option>' +
+                '<?php endforeach; else:?>' +
+                '<option value="Odontologia" selected>Odontologia</option>' +
+                '<?php endif; ?>' +
+                '</select>' +
+                '<a href="#" class="linkRemove main_dentists_article_left_button main_dentists_article_left_button_remove">' +
+                'Remove Campo</a></div>'
+            ).appendTo(divContent);
+
+            $('#removehidden').remove();
+            i++;
+            $('<input type="hidden" name="qtdSelects" value="' + i + '" id="removehidden">').appendTo(divContent);
+        });
+
+        //Cliquando em remover a linha é eliminada
+        $('#add-speciality-content').on('click', '.linkRemove', function () {
+            $(this).parents('.uniqueSelect').remove();
+            i--;
+        });
+    });
+</script>
+
+<?= $v->stop(); ?>
 
 
 

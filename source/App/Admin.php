@@ -44,6 +44,7 @@ class Admin
      */
     public function adminArea(?array $data): void
     {
+
         //VALIDACAO DO NUMERO DA PAGINA NA URL
         if (!empty($data['page']) && !is_numeric($data['page'])) {
             redirect("/admin/dash");
@@ -180,6 +181,7 @@ class Admin
      */
     public function dentistCreate(?array $data): void
     {
+
         //VALIDA SE OS CAMPOS ESTAO VAZIOS
         if (in_array("", $data)) {
             $this->message("Preencha todos os campos", "Ops! É rapidinho!", "warning");
@@ -201,6 +203,13 @@ class Admin
             return;
         }
 
+        //VALIDA O ARRAY DE ESPECIALIDADE
+        if (!is_array($data['especialidade'])){
+            $this->message("Erro ao preencheras especialidades", "Algo deu Errado!!", "warning");
+            redirect("/admin/dash");
+            return;
+        }
+
         $data = (object)filter_var_array($data, FILTER_SANITIZE_STRIPPED);
 
         $dentist = (new Dentist())->bootstrap(
@@ -211,7 +220,10 @@ class Admin
         );
 
         if ($dentist->save()) {
-            $dentist->saveTrue($data->especialidade, $dentist->id);
+            foreach ($data->especialidade as $specialityItem){
+                $dentist->saveTrue($specialityItem, $dentist->id);
+            }
+
             $this->message("O Dentista {$dentist->name} foi criado com sucesso", "Bom Trabalho!",
                 "success");
             redirect("/admin/dash");

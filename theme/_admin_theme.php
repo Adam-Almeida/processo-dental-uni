@@ -65,41 +65,8 @@
 
 <script src="<?= url("theme/_cdn/js/jquery-3.6.0.min.js"); ?>"></script>
 <script src="<?= url("theme/_cdn/js/main.js"); ?>"></script>
-<script>
+<?= $v->section("scripts"); ?>
 
-    $(function () {
-        var divContent = $('#add-speciality-content');
-        var botaoAdicionar = $('#add-speciality');
-        var i = 1;
-
-        //Ao clicar em adicionar ele cria uma linha com novos campos
-        $(botaoAdicionar).click(function () {
-            $(
-                '<div class="conteudoIndividual">' +
-                '<select style="width: 100%; margin-bottom: 5px;" name="especialidade'+ i +' ">' +
-                '<option value="especialidade a">Especialidade a</option>' +
-                '<option value="especialidade b">Especialidade B</option>' +
-                '<option value="especialidade c">Especialidade c</option>' +
-                '</select>' +
-                '<a href="#" class="linkRemover main_dentists_article_left_button main_dentists_article_left_button_remove">' +
-                'Remove Campo</a></div>'
-            ).appendTo(divContent);
-
-            $('#removehidden').remove();
-            i++;
-            $('<input type="hidden" name="quantidadeCampos" value="' + i + '" id="removehidden">').appendTo(divContent);
-        });
-
-        //Cliquando em remover a linha é eliminada
-        $('#add-speciality-content').on('click', '.linkRemover', function () {
-            $(this).parents('.conteudoIndividual').remove();
-            i--;
-        });
-    });
-
-
-
-</script>
 
 </body>
 
