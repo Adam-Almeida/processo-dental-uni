@@ -1,6 +1,6 @@
 /**
  * DESENVOLVIDO POR ADAM ALMEIDA
- * PROCESSO TROC
+ * PROCESSO DENTAL UNI 2021
  **/
 
 $(function(){
@@ -17,16 +17,5 @@ $(function(){
           scrollTop: targetOffset - 100
         }, 500);
       });
-
-    $('#copy-ticket-transfer-area').click(function(){
-      var valueOld = document.getElementById('value-real-ticket').innerHTML;
-      valueOld.select();
-    try {
-         var ok = document.execCommand('copy');
-            if (ok) { alert('Texto copiado para a área de transferência'); }
-        } catch (e) {
-        alert(e)
-    }
-});
 
 });

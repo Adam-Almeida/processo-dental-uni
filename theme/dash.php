@@ -1,6 +1,6 @@
 <?php $v->layout("_admin_theme"); ?>
 
-<section class="main_admin">
+<section class="main_admin" xmlns="http://www.w3.org/1999/html">
 
     <div class="main_admin_content">
         <header class="radius">
@@ -84,7 +84,6 @@
                 </select>
                 <label for="especialidade">Selecione a Especialidade</label>
                 <select name="especialidade">
-
                     <?php if (!empty($specialityAll)):
                         foreach ($specialityAll as $speciality):
                             ?>
@@ -95,6 +94,7 @@
                         <option value="valor1" selected>PR</option>
                     <?php endif; ?>
                 </select>
+
                 <button type="submit">Editar Cadastro</button>
 
                 <?php else: ?>
@@ -149,6 +149,14 @@
                             <option value="PR" selected>PR</option>
                         <?php endif; ?>
                     </select>
+                    <div id="add-speciality"
+                       class="main_dentists_article_left_button main_dentists_article_left_button_add">
+                        <i class="icon-pencil2"></i>Add Especialidade</div>
+
+                    <div style="width: 100%" id="add-speciality-content"></div>
+
+
+
                     <button type="submit">Efetuar Cadastro</button>
 
                     <?php endif; ?>
@@ -157,3 +165,6 @@
         </header>
     </div>
 </section>
+
+
+
