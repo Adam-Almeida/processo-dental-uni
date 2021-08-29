@@ -75,21 +75,25 @@ class Dentist extends Model
         return false;
     }
 
-    /**
-     * @return mixed|Model|null
-     */
     public function speciality()
     {
-        if (!empty($this->id)) {
-            $speciality = (new DentistSpeciality())->find("dentista_id = :id", "id={$this->id}",
-                "especialidade_id")->fetch();
 
-            if ($speciality) {
-                return (new Speciality())->findById((int)$speciality->especialidade_id);
+        $dataSpeciality = (new DentistSpeciality())
+            ->find("dentista_id = :id", "id={$this->id}")
+            ->fetch(true);
+
+        $specialitys = [];
+
+        if ($dataSpeciality) {
+            foreach ($dataSpeciality as $speciality) {
+                $specialityUnique = (new Speciality())->findById($speciality->especialidade_id);
+                array_push($specialitys, $specialityUnique);
             }
-            return null;
+
+            return $specialitys;
         }
         return null;
+
     }
 
 }

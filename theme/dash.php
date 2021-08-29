@@ -10,12 +10,14 @@
                 <?php foreach ($dentistsAll as $dentist): ?>
                     <article style="border-bottom: #ffffff 1px solid; margin-bottom: 10px">
                         <div class="main_dentists_article_left">
-                            <h2 id="value-real-dentist"><?= $dentist->dentist()->name ?></h2>
+                            <h2 id="value-real-dentist"><?= $dentist->name ?></h2>
                             <p class="icon-aid-kit">
-                                CRO <?= $dentist->dentist()->cro . " - " . $dentist->dentist()->cro_uf; ?>
-                                <span class="icon-mail4"><?= $dentist->dentist()->email; ?></span>
+                                CRO <?= $dentist->cro . " - " . $dentist->cro_uf; ?>
+                                <span class="icon-mail4"><?= $dentist->email; ?></span>
                             </p>
-                            <p class="icon-user-plus"><?= ($dentist->speciality()->name ?? "Especialidade Não Econtrada"); ?></p>
+
+                            <p class="icon-user-plus">
+                                <?= var_dump($dentist->speciality()); ?></p>
 
                         </div>
 

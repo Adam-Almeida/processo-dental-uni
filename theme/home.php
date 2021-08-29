@@ -6,19 +6,25 @@
         <p>Utilize a busca para obter resultados mais detalhados.</p>
     </header>
     <div class="main_dentists_content">
+
         <?php if (!empty($dentistsAll)):
             foreach ($dentistsAll as $dentist):
                 ?>
                 <a style="cursor: pointer;" id="copy-dentist-transfer-area">
                     <article>
                         <div class="main_dentists_article_left">
-                            <h2 id="value-real-dentist"><?= $dentist->dentist()->name; ?></h2>
+                            <h2 id="value-real-dentist"><?= $dentist->name; ?></h2>
                             <p class="icon-aid-kit">
-                                CRO <?= $dentist->dentist()->cro . " - " . $dentist->dentist()->cro_uf; ?></p>
-                            <p class="icon-mail4"><?= $dentist->dentist()->email; ?></p>
+                                CRO <?= $dentist->cro . " - " . $dentist->cro_uf; ?></p>
+                            <p class="icon-mail4"><?= $dentist->email; ?></p>
                         </div>
                         <div class="main_dentists_article_right">
-                            <p><?= ($dentist->speciality()->name ?? "Especialidade não econtrada") ?></p>
+                            <?php if($dentist->speciality()): ?>
+                            <?php foreach ($dentist->speciality() as $dentistSpeciality):?>
+                                <p><?= ($dentistSpeciality->name ?? "Especialidade Não Econtrada") ?></p>
+                            <?php endforeach; else:?>
+                            <p>Especialidade Não Econtrada</p>
+                            <?php endif; ?>
                         </div>
                     </article>
                 </a>

@@ -47,15 +47,16 @@ class Web
             redirect("/");
             return;
         }
+        $names = (new Dentist())->order('id DESC')->find();
 
-        $dentistsAll = (new DentistSpeciality())->find();
+        $dentistsAll = (new DentistSpeciality())->order('id DESC')->find();
 
         $pager = new Pager(url("/"));
-        $pager->pager($dentistsAll->count(), 5, ($data['page'] ?? 1), 2);
+        $pager->pager($names->count(), 5, ($data['page'] ?? 1), 2);
 
         echo $this->view->render("home", [
             "title" => "HOME | PROCESSO DENTAL UNI",
-            "dentistsAll" => $dentistsAll->limit($pager->limit())->offset($pager->offset())->fetch(true),
+            "dentistsAll" => $names->limit($pager->limit())->offset($pager->offset())->fetch(true),
             "paginator" => $pager->render()
         ]);
     }

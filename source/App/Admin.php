@@ -51,7 +51,7 @@ class Admin
             return;
         }
 
-        $dentistsAll = (new DentistSpeciality())->find();
+        $dentistsAll = (new DentistSpeciality())->order("id DESC")->find(true);
 
         $specialityAll = (new Speciality())->find()->fetch(true);
 
