@@ -305,8 +305,8 @@ class Admin
                 return;
             }
 
-            $dentistsAll = (new DentistSpeciality())->find();
             $specialityAll = (new Speciality())->find()->fetch(true);
+            $dentistsAll = (new Dentist())->order('id DESC')->find();
 
             $pager = new Pager(url("/admin/dash/"));
             $pager->pager($dentistsAll->count(), 3, ($data['page'] ?? 1), 2);
@@ -355,7 +355,8 @@ class Admin
                 $speciality->destroy();
             }
 
-            $this->message("<span style='text-align: center'>O Dentista foi excluido com sucesso</span>", "Bom Trabalho!", "error");
+            $this->message("<span style='text-align: center'>O Dentista foi excluido com sucesso</span>",
+                "Bom Trabalho!", "error");
             redirect("./admin/dash");
         }
         $this->message("<span style='text-align: center'>Erro ao fazer a escusão do dentista</span>", "Bom Trabalho!",

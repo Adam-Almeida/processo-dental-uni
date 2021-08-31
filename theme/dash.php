@@ -11,13 +11,13 @@
                     <article style="border-bottom: #ffffff 1px solid; padding-bottom: 10px; margin-bottom: 10px">
                         <div class="main_dentists_article_left">
                             <h2 id="value-real-dentist"><?= $dentist->name ?>
-                               <span> <a href="<?= urlLink("/admin/dentista/editar/{$dentist->id}") ?>"
-                                   class="main_dentists_article_left_button
+                                <span> <a href="<?= urlLink("/admin/dentista/editar/{$dentist->id}") ?>"
+                                          class="main_dentists_article_left_button
                                    main_dentists_article_left_button_edit"><i
-                                            class="icon-pencil2"></i> Editar</a>
+                                                class="icon-pencil2"></i> Editar</a>
                                    <a href="<?= urlLink("/admin/dentista/excluir/{$dentist->id}") ?>"
                                       class="main_dentists_article_left_button main_dentists_article_left_button_delete"><i
-                                            class="icon-bin"></i> Excluir</a>
+                                               class="icon-bin"></i> Excluir</a>
                                </span>
                             </h2>
                             <p class="icon-aid-kit">
@@ -25,10 +25,10 @@
                                 <span class="icon-mail4"><?= $dentist->email; ?></span>
                             </p>
 
-                            <?php if($dentist->speciality()): ?>
-                                <?php foreach ($dentist->speciality() as $dentistSpeciality):?>
+                            <?php if ($dentist->speciality()): ?>
+                                <?php foreach ($dentist->speciality() as $dentistSpeciality): ?>
                                     <span class="icon-user-plus small-text"><?= ($dentistSpeciality->name ?? "Especialidade Não Econtrada") ?></span>
-                                <?php endforeach; else:?>
+                                <?php endforeach; else: ?>
                                 <span class="small-text">Especialidade Não Econtrada</span>
                             <?php endif; ?>
 
@@ -89,19 +89,31 @@
                     <option value="DF">DF</option>
                 </select>
                 <label for="especialidade">Selecione a Especialidade</label>
-                <select name="especialidade">
-                    <?php if (!empty($specialityAll)):
-                        foreach ($specialityAll as $speciality):
-                            ?>
-                            <option value="<?= $speciality->id; ?>"><?= $speciality->name; ?></option>
-                        <?php endforeach;
-                    else:
-                        ?>
-                        <option value="valor1" selected>PR</option>
-                    <?php endif; ?>
-                </select>
 
-                <button type="submit">Editar Cadastro</button>
+                <?php if ($edit->speciality()): ?>
+                <div id="add-speciality-content" style="width: 100%">
+                    <?php foreach ($edit->speciality() as $dentistSpeciality): ?>
+
+                        <div class="uniqueSelect">
+                            <select style="width: 80%" disabled name="especialidade[<?= $i++; ?>]">
+                                <option value="<?= $dentistSpeciality->id; ?>"
+                                        selected><?= $dentistSpeciality->name; ?></option>
+                            </select>
+                            <a href="#" class="linkRemove remove"><i class="icon-cancel-circle"></i>Remover</a>
+                        </div>
+
+                    <?php endforeach; else: ?>
+                        <label for="especialidade">Especialidade não encontrada</label>
+                    <?php endif; ?>
+                </div>
+
+                <div id="add-speciality-content"></div>
+                <div id="add-speciality"
+                     class="main_dentists_article_left_button main_dentists_article_left_button_add">
+                    <i class="icon-plus"></i>Adicionar Especialidade
+                </div>
+
+                <button type="submit">Atualizar Cadastro</button>
 
                 <?php else: ?>
 
@@ -146,27 +158,22 @@
                     <label for="especialidade">Selecione a Especialidade</label>
                     <select name="especialidade[1]">
                         <?php if (!empty($specialityAll)):
-                            foreach ($specialityAll as $speciality):
-                                ?>
+                            foreach ($specialityAll as $speciality):?>
                                 <option value="<?= $speciality->id; ?>"><?= $speciality->name; ?></option>
-                            <?php endforeach;
-                        else:
-                            ?>
+                            <?php endforeach; else: ?>
                             <option value="Odontologia" selected>Odontologia</option>
                         <?php endif; ?>
                     </select>
-                    <div id="add-speciality"
-                       class="main_dentists_article_left_button main_dentists_article_left_button_add">
-                        <i class="icon-plus"></i>Adicionar Especialidade</div>
 
                     <div style="width: 100%" id="add-speciality-content"></div>
-
-
+                    <div id="add-speciality"
+                         class="main_dentists_article_left_button main_dentists_article_left_button_add">
+                        <i class="icon-plus"></i>Adicionar Especialidade
+                    </div>
 
                     <button type="submit">Efetuar Cadastro</button>
 
                     <?php endif; ?>
-
                 </form>
         </header>
     </div>
@@ -182,7 +189,7 @@
         $(botaoAdicionar).click(function () {
             $(
                 '<div class="uniqueSelect">' +
-                '<select style="width: 100%; margin-bottom: 5px;" name="especialidade['+ i +'] ">' +
+                '<select style="width: 100%; margin-bottom: 5px;" name="especialidade[' + i + '] ">' +
                 '<?php if (!empty($specialityAll)): foreach ($specialityAll as $speciality): ?>' +
                 '<option value="<?= $speciality->id; ?>"><?= $speciality->name; ?></option>' +
                 '<?php endforeach; else:?>' +
@@ -203,6 +210,7 @@
             $(this).parents('.uniqueSelect').remove();
             i--;
         });
+
     });
 </script>
 
