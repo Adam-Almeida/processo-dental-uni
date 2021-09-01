@@ -60,24 +60,30 @@ class Dentist extends Model
     }
 
     /**
-     * @param int $idSpeciality
+     * @param array $arraySpeciality
      * @param int $idDentist
      * @return bool
      */
-    public function updateTrue(int $idSpeciality, int $idDentist): bool
+    public function updateTrue(array $arraySpeciality, int $idDentist): bool
     {
-        $dataSpeciality = (new DentistSpeciality())->find("dentista_id = :id", "id={$idDentist}")->fetch();
+        $dataSpeciality = (new DentistSpeciality())
+            ->find("dentista_id = :id", "id={$idDentist}")->fetch(true);
 
-        $dataSpeciality->especialidade_id = $idSpeciality;
-        if ($dataSpeciality->save()) {
-            return true;
+        foreach ($dataSpeciality as $item) {
+            $item->destroy();
         }
-        return false;
+
+        foreach ($arraySpeciality as $item) {
+            $this->saveTrue($item, $idDentist);
+        }
+        return true;
     }
 
+    /**
+     * @return array|null
+     */
     public function speciality()
     {
-
         $dataSpeciality = (new DentistSpeciality())
             ->find("dentista_id = :id", "id={$this->id}")
             ->fetch(true);

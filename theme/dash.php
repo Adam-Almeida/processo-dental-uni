@@ -91,29 +91,42 @@
                 <label for="especialidade">Selecione a Especialidade</label>
 
                 <?php if ($edit->speciality()): ?>
-                <div id="add-speciality-content" style="width: 100%">
-                    <?php foreach ($edit->speciality() as $dentistSpeciality): ?>
+                    <div id="add-speciality-content" style="width: 100%">
+                        <?php foreach ($edit->speciality() as $dentistSpeciality): ?>
+                            <div class="uniqueSelect">
+                                <input name="especialidade[]" type="hidden" value="<?= $dentistSpeciality->id; ?>"/>
+                                <select style="width: 80%" disabled>
+                                    <option selected><?= $dentistSpeciality->name; ?></option>
+                                </select>
+                                <a href="#" class="linkRemove remove"><i class="icon-cancel-circle"></i>Remover</a>
+                            </div>
+                        <?php endforeach; ?>
 
-                        <div class="uniqueSelect">
-                            <select style="width: 80%" disabled name="especialidade[<?= $i++; ?>]">
-                                <option value="<?= $dentistSpeciality->id; ?>"
-                                        selected><?= $dentistSpeciality->name; ?></option>
-                            </select>
-                            <a href="#" class="linkRemove remove"><i class="icon-cancel-circle"></i>Remover</a>
+                        <div id="add-speciality" style="width: 30%"
+                             class="main_dentists_article_left_button main_dentists_article_left_button_add">
+                            <i class="icon-plus"></i>Adicionar Especialidade
                         </div>
+                    </div>
+                    <button style="width: 100%" type="submit">Atualizar Cadastro</button>
 
-                    <?php endforeach; else: ?>
-                        <label for="especialidade">Especialidade não encontrada</label>
-                    <?php endif; ?>
-                </div>
+                <?php else: ?>
+                    <select name="especialidade[1]">
+                        <?php if (!empty($specialityAll)):
+                            foreach ($specialityAll as $speciality):?>
+                                <option value="<?= $speciality->id; ?>"><?= $speciality->name; ?></option>
+                            <?php endforeach; else: ?>
+                            <option value="Odontologia" selected>Odontologia</option>
+                        <?php endif; ?>
+                    </select>
+                    <div id="add-speciality-content" style="width: 100%"></div>
+                    <div id="add-speciality" style="width: 30%"
+                         class="main_dentists_article_left_button main_dentists_article_left_button_add">
+                        <i class="icon-plus"></i>Adicionar Especialidade
+                    </div>
 
-                <div id="add-speciality-content"></div>
-                <div id="add-speciality"
-                     class="main_dentists_article_left_button main_dentists_article_left_button_add">
-                    <i class="icon-plus"></i>Adicionar Especialidade
-                </div>
+                    <button type="submit">Atualizar Cadastro</button>
+                <?php endif; ?>
 
-                <button type="submit">Atualizar Cadastro</button>
 
                 <?php else: ?>
 

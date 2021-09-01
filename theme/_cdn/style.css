@@ -273,15 +273,19 @@
 .main_dentists_article_left_button_add:hover,
 .main_dentists_article_left_button_edit:hover,
 .main_dentists_article_left_button_delete:hover,
-.main_dentists_article_left_button_remove:hover,
-.remove:hover{
+.main_dentists_article_left_button_remove:hover
+{
     filter: saturate(50%);
     transition: 0.2ms;
 }
 
 .remove{
     font-size: 0.9em;
-    color: #e38100;
+    color: grey;
+}
+
+.remove:hover{
+    color: #2D3142;
 
 }
 

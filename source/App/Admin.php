@@ -239,6 +239,7 @@ class Admin
      */
     public function dentistUpdate(?array $data): void
     {
+
         if ($data['id'] && !is_numeric($data['id'])) {
             redirect("/admin/dash");
             return;
@@ -270,6 +271,13 @@ class Admin
                 return;
             }
 
+            //VALIDA O ARRAY DE ESPECIALIDADE
+            if (!is_array($data['especialidade'])) {
+                $this->message("Erro ao preencher as especialidades", "Algo deu Errado!!", "warning");
+                redirect("/admin/dash");
+                return;
+            }
+
             $data = (object)$data;
 
             $dentist = (new Dentist())->findById($data->id);
@@ -280,6 +288,7 @@ class Admin
 
             if ($dentist->save()) {
                 $dentist->updateTrue($data->especialidade, $dentist->id);
+
                 $this->message("O Dentista {$dentist->name} foi atualizado com sucesso", "Bom Trabalho!",
                     "success");
                 redirect("/admin/dash");
