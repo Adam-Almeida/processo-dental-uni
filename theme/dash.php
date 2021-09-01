@@ -94,9 +94,9 @@
                     <div id="add-speciality-content" style="width: 100%">
                         <?php foreach ($edit->speciality() as $dentistSpeciality): ?>
                             <div class="uniqueSelect">
-                                <input name="especialidade[]" type="hidden" value="<?= $dentistSpeciality->id; ?>"/>
+                                <input name="especialidade[]" type="hidden" value="<?= ($dentistSpeciality->id ?? null); ?>"/>
                                 <select style="width: 80%" disabled>
-                                    <option selected><?= $dentistSpeciality->name; ?></option>
+                                    <option selected><?= ($dentistSpeciality->name ?? "Especialidade Não econtrada") ?></option>
                                 </select>
                                 <a href="#" class="linkRemove remove"><i class="icon-cancel-circle"></i>Remover</a>
                             </div>
