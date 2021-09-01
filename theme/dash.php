@@ -126,7 +126,10 @@
 
                     <button type="submit">Atualizar Cadastro</button>
                 <?php endif; ?>
+
+
                 <?php else: ?>
+
                 <h1>Cadastrar Novo Dentista</h1>
                 <form action="<?= urlLink("/admin/dentista"); ?>" enctype="multipart/form-data" method="post">
                     <label for="name">Nome</label>

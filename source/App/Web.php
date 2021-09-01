@@ -85,13 +85,13 @@ class Web
         $page = (filter_var($data['page'], FILTER_VALIDATE_INT) >= 1 ? $data['page'] : 1);
 
         $dentist = new Dentist();
+        $dentistSearch = $dentist->find("{$type} LIKE :s", "s=%{$search}%")->fetch(true);
 
-        $dentistSearch = $dentist->find("{$type} LIKE :s", "s=%{$search}%");
 
         echo $this->view->render("search", [
             "title" => "HOME | PROCESSO DENTAL UNI",
             "search" => ($search ?? null),
-            "dentistsAll" => $dentistSearch->fetch(true)
+            "dentistsAll" => $dentistSearch
         ]);
     }
 
